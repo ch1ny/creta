@@ -1,0 +1,19 @@
+{
+	"compilerOptions": {
+		"target": "es2016",
+		"jsx": "react",
+		"module": "commonjs",
+		"esModuleInterop": true,
+		"forceConsistentCasingInFileNames": true,
+		"strict": true,
+		"skipLibCheck": true,
+		"baseUrl": "./",
+		"resolveJsonModule": true,
+		"outDir": "../../build/render",
+		"removeComments": true,
+		"paths": {
+			"@/*": ["./*"]
+		}
+	},
+	"include": ["./**/*"]
+}

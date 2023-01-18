@@ -1,0 +1,22 @@
+#!/usr/bin/env node
+
+const program = require('commander');
+const { resolve } = require('path');
+const commands = require('../lib');
+const { version } = require('../package.json');
+
+program.version(version);
+
+program.usage('<command>');
+
+program
+	.command('new')
+	.description('Create a React+Electron+TypeScript project.')
+	.alias('n')
+	.action(commands.create);
+
+program.parse(process.argv);
+
+if (!program.args.length) {
+	program.help();
+}
