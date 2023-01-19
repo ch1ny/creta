@@ -64,7 +64,7 @@ const copyTemplate = async (props: IProjectProps, projectDir: string) => {
 					filePath.endsWith('build') ||
 					filePath.endsWith('dist') ||
 					filePath.endsWith('node_modules') ||
-					filePath.endsWith('updater/target')
+					filePath.endsWith(`updater${path.sep}target`)
 				)
 					return false;
 			} else {
@@ -85,6 +85,11 @@ const copyTemplate = async (props: IProjectProps, projectDir: string) => {
 		spaces: '\t',
 		EOL: '\n',
 	});
+
+	console.log(chalk.green('项目初始化完毕，执行下列指令开启编程体验'));
+	console.log(chalk.cyan(`  cd ${projectName}`));
+	console.log(chalk.cyan('  npm install'));
+	console.log(chalk.cyan('  npm run dev'));
 };
 
 const validateProjectName = (projectName: string): boolean => {
