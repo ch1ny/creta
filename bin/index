@@ -5,6 +5,8 @@ const { resolve } = require('path');
 const commands = require('../lib');
 const { version } = require('../package.json');
 
+process.env.NODE_PATH = resolve(__dirname, '../node_modules/');
+
 program.version(version);
 
 program.usage('<command>');
