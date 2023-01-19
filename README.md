@@ -6,6 +6,8 @@
 
 ## 使用 - Usage
 
+> 欢迎阅读我们提供的[使用手册](https://creta.kira.host/)
+
 **creta** 使用起来非常方便，只需一行指令即可搭建出 React+TypeScript+Electron 三合一的应用模板。
 使用该脚手架前需要保证在当前机器上已安装有 **NodeJS** 环境，不过我相信绝大多数前端程序员都以具备了这一条前置条件，因此这里我便默认阅读本文的各位已经能够执行后续的操作了。
 
@@ -29,7 +31,7 @@ creta new my-app
 您可以直接在应用根目录下执行：
 
 ```bash
-creta dev
+npm run dev
 ```
 
 以在开发模式下运行您的程序；
@@ -37,7 +39,7 @@ creta dev
 也可以执行：
 
 ```bash
-creta dist
+npm run dist
 ```
 
 将您的应用程序打包成exe。

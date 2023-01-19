@@ -1,0 +1,16 @@
+{
+	"name": "creta-docs",
+	"version": "1.0.0",
+	"main": "index.js",
+	"author": "德布罗煜",
+	"license": "MIT",
+	"dependencies": {
+		"vitepress": "^1.0.0-alpha.38"
+	},
+	"scripts": {
+		"dev": "vitepress dev docs",
+		"dist": "vitepress build docs",
+		"build": "npm run dist",
+		"serve": "vitepress serve docs"
+	}
+}
