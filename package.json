@@ -24,5 +24,23 @@
 	"dependencies": {
 		"chalk": "4",
 		"inquirer": "8"
+	},
+	"keywords": [
+		"creta",
+		"react",
+		"electron",
+		"typescript",
+		"cli",
+		"template"
+	],
+	"repository": {
+		"type": "git",
+		"url": "https://github.com/ch1ny/creta.git"
+	},
+	"bugs": {
+		"url": "https://github.com/ch1ny/creta/issues"
+	},
+	"publishConfig": {
+		"registry": "https://registry.npmjs.org/"
 	}
 }
