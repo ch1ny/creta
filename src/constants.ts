@@ -10,7 +10,10 @@ class Constants {
 	}
 
 	cliDir = path.resolve(__dirname, '..');
+	libDir = path.join(this.cliDir, 'lib');
 	templatesDir = path.join(this.cliDir, 'templates');
+
+	scriptsCwd = process.cwd();
 }
 
-export const constants = new Constants();
+export default new Constants();

@@ -1,16 +1,41 @@
-const path = require('path');
-const chalk = require('chalk');
-const fse = require('fs-extra');
-const { DIRNAME } = require('./common');
-const { updateDarwin } = require('./update/darwin');
-const { updateWin32 } = require('./update/win32');
+import chalk from 'chalk';
+import cp from 'child_process';
+import fse from 'fs-extra';
+import path from 'path';
+import constants from '../constants';
 
-const dist = async () => {
+const { scriptsCwd } = constants;
+
+const buildRender = () =>
+	new Promise<void>((resolve) => {
+		cp.execSync('webpack --mode production', {
+			cwd: path.resolve(scriptsCwd, 'src', 'render'),
+		});
+		resolve();
+	});
+
+const buildPreload = () =>
+	new Promise<void>((resolve) => {
+		cp.execSync('tsc', {
+			cwd: path.resolve(scriptsCwd, 'src', 'preload'),
+		});
+		resolve();
+	});
+
+const buildMain = () =>
+	new Promise<void>((resolve) => {
+		cp.execSync('tsc', {
+			cwd: path.resolve(scriptsCwd, 'src', 'main'),
+		});
+		resolve();
+	});
+
+const main = async () => {
 	console.log(chalk.bold.blueBright('1. 清空build目录'));
-	fse.emptyDirSync(path.resolve(DIRNAME, 'build'));
+	fse.emptyDirSync(path.resolve(scriptsCwd, 'build'));
 
 	console.log(chalk.bold.blueBright('2. 读取package.json数据'));
-	const packageJson = fse.readJsonSync(path.resolve(DIRNAME, 'package.json'));
+	const packageJson = fse.readJsonSync(path.resolve(scriptsCwd, 'package.json'));
 	const {
 		name: packageName = '',
 		version: packageVersion = '1.0.0',
@@ -20,17 +45,12 @@ const dist = async () => {
 	} = packageJson;
 
 	console.log(chalk.bold.blueBright('3. 编译ts代码'));
-	const { execa } = await import('execa');
-	await Promise.all([
-		execa('npm', ['run', 'build:render']),
-		execa('npm', ['run', 'build:preload']),
-		execa('npm', ['run', 'build:main']),
-	]);
+	await Promise.all([buildRender(), buildPreload(), buildMain()]);
 	console.log(chalk.bold.greenBright('编译结束'));
 
 	console.log(chalk.bold.blueBright('4. 生成package.json'));
 	fse.outputJsonSync(
-		path.resolve(DIRNAME, 'build', 'package.json'),
+		path.resolve(scriptsCwd, 'build', 'package.json'),
 		{
 			name: `${packageName}`,
 			version: `${packageVersion}`,
@@ -66,16 +86,15 @@ const dist = async () => {
 		.split('/')
 		.reverse()[0]
 		.split('-')
-		.map((str) => `${str.substring(0, 1).toUpperCase()}${str.substring(1)}`)
+		.map((str: string) => `${str.substring(0, 1).toUpperCase()}${str.substring(1)}`)
 		.join('');
 	const electronPackagerOptions = [
-		'electron-packager',
-		path.resolve(DIRNAME, 'build'),
+		path.resolve(scriptsCwd, 'build'),
 		appName,
 		`--platform=${platform}`,
 		`--arch=${arch}`,
 		`--out`,
-		`${path.resolve(DIRNAME, 'dist/')}`,
+		`${path.resolve(scriptsCwd, 'dist/')}`,
 		`--asar`,
 		overwrite === 'Y' ? '--overwrite' : '',
 	];
@@ -96,20 +115,18 @@ const dist = async () => {
 	}
 
 	console.log(chalk.bold.blueBright('6. electron-packager打包可执行文件'));
-	await execa('npx', electronPackagerOptions, {
-		stdout: process.stdout,
-	});
+	cp.execSync(`electron-packager ${electronPackagerOptions.join(' ')}`);
 
 	// switch (platform) {
 	// 	case 'darwin':
-	// 		await updateDarwin(appName, arch);
+	// 		await buildUpdaterOnDarwin(appName, arch);
 	// 		break;
 	// 	case 'win32':
-	// 		await updateWin32(appName, arch);
+	// 		await buildUpdaterOnWin32(appName, arch);
 	// 		break;
 	// 	default:
 	// 	// no-op;
 	// }
 };
 
-dist();
+main();

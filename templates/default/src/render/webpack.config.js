@@ -1,7 +1,8 @@
 const path = require('path');
 const HtmlWebpackPlugin = require('html-webpack-plugin');
 const { CleanWebpackPlugin } = require('clean-webpack-plugin');
-const { DIRNAME } = require('../../scripts/common');
+
+const DIRNAME = path.resolve(__dirname, '..', '..');
 
 const devPort = require('../../config/dev.config').DEV_PORT;
 

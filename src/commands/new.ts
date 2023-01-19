@@ -3,7 +3,7 @@ import fs from 'fs';
 import fse from 'fs-extra';
 import inquirer from 'inquirer';
 import path from 'path';
-import { constants } from '../constants';
+import constants from '../constants';
 
 interface IProjectProps {
 	projectName: string;
@@ -64,11 +64,12 @@ const copyTemplate = async (props: IProjectProps, projectDir: string) => {
 					filePath.endsWith('build') ||
 					filePath.endsWith('dist') ||
 					filePath.endsWith('node_modules') ||
-					filePath.endsWith(`updater${path.sep}target`)
+					filePath.endsWith(`updater${path.sep}target`) ||
+					filePath.endsWith('.yalc')
 				)
 					return false;
 			} else {
-				if (filePath.endsWith('yarn.lock')) return false;
+				if (filePath.endsWith('.lock')) return false;
 			}
 			return true;
 		},

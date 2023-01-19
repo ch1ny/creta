@@ -14,8 +14,6 @@
 		"@types/fs-extra": "^11.0.1",
 		"@types/inquirer": "^9.0.3",
 		"@types/node": "^18.11.18",
-		"commander": "^10.0.0",
-		"fs-extra": "^11.1.0",
 		"gulp": "^4.0.2",
 		"gulp-clean": "^0.4.0",
 		"gulp-typescript": "^6.0.0-alpha.1",
@@ -23,6 +21,8 @@
 	},
 	"dependencies": {
 		"chalk": "4",
+		"commander": "^10.0.0",
+		"fs-extra": "^11.1.0",
 		"inquirer": "8"
 	},
 	"keywords": [
