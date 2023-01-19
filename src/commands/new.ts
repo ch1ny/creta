@@ -18,23 +18,6 @@ const getProjectProps = async () => {
 	const projectProps: IProjectProps = await inquirer.prompt([
 		{
 			type: 'input',
-			name: 'projectName',
-			message: '项目名称',
-			validate: function (input) {
-				const done = (<any>this).async();
-				if (!input) {
-					done('请输入项目名');
-					return;
-				}
-				if (/[\\:*?"<>|]/.test(input)) {
-					done('请输入合法文件名');
-					return;
-				}
-				done(null, true);
-			},
-		},
-		{
-			type: 'input',
 			name: 'projectVersion',
 			message: '项目版本',
 			default: '1.0.0',
@@ -104,8 +87,29 @@ const copyTemplate = async (props: IProjectProps, projectDir: string) => {
 	});
 };
 
-export default async () => {
-	const props = await getProjectProps();
+const validateProjectName = (projectName: string): boolean => {
+	const error = (errMsg: string) => {
+		console.log(chalk.red(`× ${errMsg}`));
+	};
+
+	if (!projectName) {
+		error('请输入项目名');
+		return false;
+	}
+	if (/[\\:*?"<>|]/.test(projectName)) {
+		error('请输入合法文件名');
+		return false;
+	}
+	return true;
+};
+
+export default async (projectName: string) => {
+	if (!validateProjectName(projectName)) return;
+
+	const props = {
+		...(await getProjectProps()),
+		projectName,
+	};
 
 	// 目标根路径，process.cwd()为脚手架工作时的路径，将其与用户输入的项目名称拼接起来作为目标路径
 	const projectDir = path.resolve(process.cwd(), props.projectName);

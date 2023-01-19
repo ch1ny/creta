@@ -10,7 +10,7 @@ program.version(version);
 program.usage('<command>');
 
 program
-	.command('new')
+	.command('new <project-name>')
 	.description('Create a React+Electron+TypeScript project.')
 	.alias('n')
 	.action(commands.create);
