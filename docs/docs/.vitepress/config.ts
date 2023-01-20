@@ -1,9 +1,20 @@
-export default {
+import { defineConfig } from 'vitepress';
+
+export default defineConfig({
 	title: 'creta',
 	description: 'A CLI to create a react+electron+typescript App.',
 	appearance: true, // 允许用户切换深色模式
 	outDir: '../dist',
 	cacheDir: '../cache',
+	head: [
+		[
+			'link',
+			{
+				rel: 'icon',
+				href: 'https://assets.kira.host/image/creta_logo_colored.svg',
+			},
+		],
+	],
 	themeConfig: {
 		socialLinks: [
 			{ icon: 'github', link: 'https://github.com/ch1ny/' },
@@ -21,4 +32,4 @@ export default {
 			},
 		],
 	},
-};
+});

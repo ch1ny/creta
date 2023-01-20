@@ -1,5 +1,11 @@
 # CRETA
 
+[![npm version](https://badgen.net/npm/v/creta)](https://www.npmjs.com/package/creta) [![npm weekly download](https://badgen.net/npm/dw/creta)](https://www.npmjs.com/package/creta) [![github stars](https://badgen.net/github/stars/ch1ny/creta)](https://github.com/ch1ny/creta/stargazers)
+
+<div style="width: 100%; display: flex; justify-content: center;">
+  <img src="https://assets.kira.host/image/creta_logo_colored.svg" alt="LOGO" width="150" />
+</div>
+
 ## 介绍 - Introduce
 
 **creta** 全称 `create react-electron-typescript app`，是一款为了协助前端程序员快速搭建 **React + TypeScript** 的 **Electron** 应用的脚手架。

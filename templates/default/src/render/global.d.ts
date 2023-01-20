@@ -3,6 +3,10 @@ declare module '*.less' {
 	export default styles;
 }
 
+declare module '*.png';
+declare module '*.jpg';
+declare module '*.gif';
+
 declare interface Window {
 	ipc: {
 		on: (channel: string, cb: Function) => void;

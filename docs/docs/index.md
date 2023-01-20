@@ -2,7 +2,23 @@
 
 ## creta
 
-> creta = create **React + Electron + TypeScript** app
+<div style="width: 100%; display: flex;">
+  <a href="https://www.npmjs.com/package/creta">
+    <img src="https://badgen.net/npm/v/creta" alt="npm version" />
+  </a>
+  &nbsp;
+  <a href="https://www.npmjs.com/package/creta">
+    <img src="https://badgen.net/npm/dw/creta" alt="npm weekly download" />
+  </a>
+  &nbsp;
+  <a href="https://github.com/ch1ny/creta/stargazers">
+    <img src="https://badgen.net/github/stars/ch1ny/creta" alt="github stars" />
+  </a>
+</div>
+
+<div style="width: 100%; display: flex; justify-content: center;">
+  <img src="/assets/favicon.svg" alt="LOGO" width="150" />
+</div>
 
 [Creta](https://github.com/ch1ny/creta) 全称 `create React + Electron + TypeScript app`，是一款为了协助前端开发者快速搭建基于 React.js + TypeScript 的 Electron 应用模板的脚手架工具。
 
