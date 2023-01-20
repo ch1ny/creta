@@ -5,6 +5,6 @@ docs/
 node_modules/
 src/
 
-tsconfig.json
+./tsconfig.json
 
 yarn.lock
