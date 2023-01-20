@@ -7,11 +7,7 @@ const { version } = require('../package.json');
 
 process.env.NODE_PATH = resolve(__dirname, '../node_modules/');
 
-// program.version(version);
-
-program.option('-v, --version', 'output the version number').action(() => {
-	console.log(version);
-});
+program.version(version, '-v, --version');
 
 program.usage('<command>');
 

@@ -43,12 +43,11 @@ const getProjectProps = async () => {
 	return projectProps;
 };
 
-const initProjectDirectory = async (props: IProjectProps, projectDir: string) => {
-	const { projectName } = props;
-
+const initProjectDirectory = async (projectName: string, projectDir: string) => {
 	// 判断当前文件夹下是否有目标路径的目录
 	if (fs.existsSync(projectDir)) {
-		throw Error(`Folder named '${projectName}' has already been existed`);
+		console.log(chalk.red(`Folder named '${projectName}' has already been existed`));
+		process.exit(-1);
 	}
 	// 创建文件夹
 	await fs.promises.mkdir(projectDir, { recursive: true });
@@ -112,13 +111,13 @@ const validateProjectName = (projectName: string): boolean => {
 export default async (projectName: string) => {
 	if (!validateProjectName(projectName)) return;
 
+	// 目标根路径，process.cwd()为脚手架工作时的路径，将其与用户输入的项目名称拼接起来作为目标路径
+	const projectDir = path.resolve(process.cwd(), projectName);
+	await initProjectDirectory(projectName, projectDir);
+
 	const props = {
 		...(await getProjectProps()),
 		projectName,
 	};
-
-	// 目标根路径，process.cwd()为脚手架工作时的路径，将其与用户输入的项目名称拼接起来作为目标路径
-	const projectDir = path.resolve(process.cwd(), props.projectName);
-	await initProjectDirectory(props, projectDir);
 	await copyTemplate(props, projectDir);
 };
