@@ -24,6 +24,12 @@ program
 	.description('Build your app source code and pack it.')
 	.action(commands.dist);
 
+program
+	.command('eup <source> <target>')
+	.option('-d, --decompress', 'Decompress with EUP')
+	.description('Make electron update package with EUP.')
+	.action(commands.eup);
+
 program.parse(process.argv);
 
 if (!program.args.length) {
