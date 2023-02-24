@@ -7,23 +7,19 @@ const { scriptsCwd } = constants;
 const COMMANDS =
 	process.platform === 'win32'
 		? {
-				WEBPACK: 'webpack.cmd',
+				VITE: 'vite.cmd',
 				ELECTRON: 'electron.cmd',
 		  }
 		: {
-				WEBPACK: 'webpack',
+				VITE: 'vite',
 				ELECTRON: 'electron',
 		  };
 
 const main = async () => {
 	// 1. 启动渲染进程
-	const react = cp.spawn(
-		COMMANDS.WEBPACK,
-		['serve', '--mode', 'development', '--env', 'development'],
-		{
-			cwd: path.resolve(scriptsCwd, 'src', 'render'),
-		}
-	);
+	const react = cp.spawn(COMMANDS.VITE, {
+		cwd: path.resolve(scriptsCwd, 'src', 'render'),
+	});
 	react.stdout.on('data', (data) => {
 		console.log(`${data}`);
 	});
