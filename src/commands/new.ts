@@ -20,7 +20,7 @@ const getProjectProps = async () => {
 			type: 'input',
 			name: 'projectVersion',
 			message: '项目版本',
-			default: '1.0.0',
+			default: '0.1.0',
 		},
 		{
 			type: 'input',

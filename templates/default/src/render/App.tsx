@@ -1,5 +1,4 @@
-import React from 'react';
-import styles from './App.less';
+import styles from './App.module.less';
 import { MainBody, TopBar } from './components';
 
 console.log(styles);

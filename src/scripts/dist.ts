@@ -8,7 +8,7 @@ const { scriptsCwd } = constants;
 
 const buildRender = () =>
 	new Promise<void>((resolve) => {
-		cp.execSync('webpack --mode production', {
+		cp.execSync('tsc&&vite build', {
 			cwd: path.resolve(scriptsCwd, 'src', 'render'),
 		});
 		resolve();

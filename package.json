@@ -1,6 +1,6 @@
 {
 	"name": "creta",
-	"version": "0.0.12",
+	"version": "0.0.13-alpha.3",
 	"bin": {
 		"creta": "bin/index"
 	},
