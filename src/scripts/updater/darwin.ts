@@ -4,12 +4,12 @@ import fse from 'fs-extra';
 import path from 'path';
 import constants from '../../constants';
 
-const { scriptsCwd } = constants;
+const { binDir, scriptsCwd } = constants;
 
 export const buildUpdaterOnDarwin = async (appName: string, arch: 'x86' | 'x64') => {
 	console.log(chalk.bold.blueBright('7. 复制更新器'));
 	await fse.copyFile(
-		path.resolve(scriptsCwd, 'updaters', 'darwin', 'updater'),
+		path.resolve(binDir, 'exe', 'updater'),
 		path.resolve(scriptsCwd, 'dist', `${appName}-darwin-${arch}/${appName}.app`, 'updater')
 	);
 
@@ -33,7 +33,6 @@ export const buildUpdaterOnDarwin = async (appName: string, arch: 'x86' | 'x64')
 
 	console.log(chalk.blueBright('8.2 制作更新包'));
 	// 解压: tar -zxf 压缩包名.tar.gz
-	const tarGzName = `update.tar.gz`;
-	cp.execSync(`tar -zcf 'dist/${tarGzName}' 'update'`, { cwd: scriptsCwd });
+	cp.execSync(`creta eup update dist/update.eup`, { cwd: scriptsCwd });
 	cp.execSync(`rm -rf ${path.resolve(scriptsCwd, 'update')}`);
 };

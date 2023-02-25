@@ -26,14 +26,7 @@ program
 	.action(commands.dist);
 
 program
-	.command('dist')
-	.description('Build your app source code and pack it.')
-	.alias('n')
-	.action(commands.dist);
-
-program
 	.command('eup <source> <target>')
-	.option('-d, --decompress', 'Decompress with EUP')
 	.description('Make electron update package with EUP.')
 	.action(commands.eup);
 

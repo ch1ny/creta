@@ -3,6 +3,8 @@ import cp from 'child_process';
 import fse from 'fs-extra';
 import path from 'path';
 import constants from '../constants';
+import { buildUpdaterOnDarwin } from './updater/darwin';
+import { buildUpdaterOnWin32 } from './updater/win32';
 
 const { scriptsCwd } = constants;
 
@@ -117,16 +119,16 @@ const main = async () => {
 	console.log(chalk.bold.blueBright('6. electron-packager打包可执行文件'));
 	cp.execSync(`electron-packager ${electronPackagerOptions.join(' ')}`);
 
-	// switch (platform) {
-	// 	case 'darwin':
-	// 		await buildUpdaterOnDarwin(appName, arch);
-	// 		break;
-	// 	case 'win32':
-	// 		await buildUpdaterOnWin32(appName, arch);
-	// 		break;
-	// 	default:
-	// 	// no-op;
-	// }
+	switch (platform) {
+		case 'darwin':
+			await buildUpdaterOnDarwin(appName, arch);
+			break;
+		case 'win32':
+			await buildUpdaterOnWin32(appName, arch);
+			break;
+		default:
+		// no-op;
+	}
 };
 
 main();
