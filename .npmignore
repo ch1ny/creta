@@ -9,4 +9,8 @@ src/
 
 yarn.lock
 
-creta_updater/
+creta-updater/
+
+gulpfile.js
+
+tsconfig.json
