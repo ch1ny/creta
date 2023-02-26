@@ -14,4 +14,4 @@ creta-updater/
 
 gulpfile.js
 
-tsconfig.json
+tsconfig.*json
