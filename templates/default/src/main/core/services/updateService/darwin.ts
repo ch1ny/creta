@@ -10,14 +10,17 @@ class Darwin implements IUpdateService {
 	async beforeStartCheck() {
 		if (!fs.existsSync(path.join(ContentsParentDir, 'update.eup'))) return;
 
-		this.exeUpdater();
+		// 阻塞
+		await new Promise(() => {
+			this.exeUpdater();
+		});
 	}
 
 	async exeUpdater() {
 		const { spawn } = cp;
 		const child = spawn(
 			path.join(ContentsParentDir, 'updater'),
-			[process.platform, `${process.pid}`, path.dirname(path.join(EXE_DIR, '..'))],
+			['-p', `${process.pid}`, '-e', path.dirname(path.join(EXE_DIR, '..'))],
 			{
 				detached: true,
 				cwd: ContentsParentDir,

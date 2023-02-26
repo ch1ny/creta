@@ -6,20 +6,24 @@ import { IUpdateService } from './interface';
 
 class Win32 implements IUpdateService {
 	async beforeStartCheck() {
-		if (!fs.existsSync(path.resolve(EXE_DIR, 'resources', 'update.eup'))) return;
+		if (!fs.existsSync(path.resolve(EXE_DIR, 'update.eup'))) return;
 
-		this.exeUpdater();
+		// 阻塞
+		await new Promise(() => {
+			this.exeUpdater();
+		});
 	}
 
 	async exeUpdater() {
 		const { spawn } = cp;
-		const updaterDir = path.resolve(EXE_DIR, 'resources');
+
 		const child = spawn(
-			path.join(updaterDir, 'updater.exe'),
-			[process.platform, `${process.pid}`, EXE_PATH],
+			path.join(EXE_DIR, 'updater.exe'),
+			['-p', `${process.pid}`, '-e', EXE_PATH],
 			{
 				detached: true,
-				cwd: updaterDir,
+				cwd: EXE_DIR,
+				stdio: 'ignore',
 			}
 		);
 		child.unref();

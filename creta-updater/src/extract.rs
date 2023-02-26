@@ -37,8 +37,8 @@ pub fn exec(src_file: &str, dst_dir: &str) -> i32 {
                     fs::create_dir_all(p).unwrap();
                 }
             }
-            let mut outfile = fs::File::create(&out_path).unwrap();
-            io::copy(&mut file, &mut outfile).unwrap();
+            let mut out_file = fs::File::create(&out_path).unwrap();
+            io::copy(&mut file, &mut out_file).unwrap();
         }
 
         // Get and Set permissions
