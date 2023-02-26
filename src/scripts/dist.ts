@@ -3,8 +3,17 @@ import cp from 'child_process';
 import fse from 'fs-extra';
 import path from 'path';
 import constants from '../constants';
+import { buildUpdaterOnDarwin } from './updater/darwin';
+import { buildUpdaterOnWin32 } from './updater/win32';
 
 const { scriptsCwd } = constants;
+
+const {
+	/**
+	 * 自行设计更新方案
+	 */
+	CUSTOM_UPDATER = false,
+} = require(path.resolve(scriptsCwd, 'config/dist.config'));
 
 const buildRender = () =>
 	new Promise<void>((resolve) => {
@@ -117,16 +126,19 @@ const main = async () => {
 	console.log(chalk.bold.blueBright('6. electron-packager打包可执行文件'));
 	cp.execSync(`electron-packager ${electronPackagerOptions.join(' ')}`);
 
-	// switch (platform) {
-	// 	case 'darwin':
-	// 		await buildUpdaterOnDarwin(appName, arch);
-	// 		break;
-	// 	case 'win32':
-	// 		await buildUpdaterOnWin32(appName, arch);
-	// 		break;
-	// 	default:
-	// 	// no-op;
-	// }
+	// 如果开发者设置了自行更新则不打包更新包及安装程序
+	if (!!CUSTOM_UPDATER) {
+		switch (platform) {
+			case 'darwin':
+				await buildUpdaterOnDarwin(appName, arch);
+				break;
+			case 'win32':
+				await buildUpdaterOnWin32(appName, arch);
+				break;
+			default:
+			// no-op;
+		}
+	}
 };
 
 main();

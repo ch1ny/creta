@@ -8,3 +8,9 @@ src/
 ./tsconfig.json
 
 yarn.lock
+
+creta-updater/
+
+gulpfile.js
+
+tsconfig.json

@@ -10,6 +10,7 @@ class Constants {
 	}
 
 	cliDir = path.resolve(__dirname, '..');
+	binDir = path.resolve(this.cliDir, 'bin');
 	libDir = path.join(this.cliDir, 'lib');
 	templatesDir = path.join(this.cliDir, 'templates');
 

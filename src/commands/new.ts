@@ -1,4 +1,5 @@
 import chalk from 'chalk';
+import cp from 'child_process';
 import fs from 'fs';
 import fse from 'fs-extra';
 import inquirer from 'inquirer';
@@ -85,6 +86,12 @@ const copyTemplate = async (props: IProjectProps, projectDir: string) => {
 		spaces: '\t',
 		EOL: '\n',
 	});
+
+	try {
+		cp.execSync('git init', {
+			cwd: projectDir,
+		});
+	} catch (e) {}
 
 	console.log(chalk.green('项目初始化完毕，执行下列指令开启编程体验'));
 	console.log(chalk.cyan(`  cd ${projectName}`));
