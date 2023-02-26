@@ -1,6 +1,8 @@
-# 快速开始
+# 什么是 creta
 
-## creta
+<div style="width: 100%; display: flex; justify-content: center;">
+  <img src="https://assets.kira.host/image/creta_logo_colored.svg" alt="LOGO" width="150" />
+</div>
 
 <div style="width: 100%; display: flex;">
   <a href="https://www.npmjs.com/package/creta">
@@ -16,47 +18,19 @@
   </a>
 </div>
 
-<div style="width: 100%; display: flex; justify-content: center;">
-  <img src="/assets/favicon.svg" alt="LOGO" width="150" />
-</div>
-
 [Creta](https://github.com/ch1ny/creta) 全称 `create React + Electron + TypeScript app`，是一款为了协助前端开发者快速搭建基于 React.js + TypeScript 的 Electron 应用模板的脚手架工具。
 
-本文将帮助您熟悉**creta**，达到快速开发的目的。
+creta 由三部分组成：
+- 第一部分是[creta脚手架CLI](https://github.com/ch1ny/creta/tree/master/src)，它包含**新建项目**、**开发模式调试**以及**构建打包**三大功能模块。
+- 第二部分是[creta-updater](https://github.com/ch1ny/creta/tree/master/creta-updater)，它是由 Rust 编写的 `eup`（基于 Deflate算法的应用更新包）压缩及解压程序，被 `creta` 用来作为默认的应用更新方案工具。
+- 第三部分是我们提供的一些[插件](https://github.com/ch1ny/creta/tree/master/plugins)，在开发时为用户提高一定的开发体验。
 
-## 新建项目
+## 它是如何工作的
 
-> 我们推荐您通过 `npx` 使用本脚手架
+事实上，`creta` 为开发者提供了基本的项目模板，在使用 `creta` 新建项目之后，开发者可以直接通过我们提供的模板进行开发。
 
-使用 `creta` 创建可以非常方便地创建您的应用，只需要在终端输入如下指令并执行即可:
+一个 electron 应用主要由三部分组成，基于 `Node.js` 的主进程部分、基于 web 开发的渲染进程部分，以及预加载脚本。我们的模板中分别为用户在 `src` 目录下创建了三个子目录，主进程、预加载脚本、渲染进程的代码对应着 `main`、`preload` 和 `render`。
 
-```bash
-npx creta new my-app
-```
+三个部分都已配置好基本的 typescript 开发环境，其中渲染程序则额外包含了 `React.js` 的相关依赖，并使用 `vite` 进行构建，同时我们也已为您做好了 `less` 以及 `module.css` 的相关配置。
 
-接下来您的目录中便会出现一个名为 `my-app` 的文件夹，其内部就是您的应用源码文件了。
-
-:::tip
-当然，您也可以通过全局安装的方式安装我们的依赖:
-```bash
-npm install -g creta
-# 或
-yarn global add creta
-
-creta new my-app
-```
-但是我们不推荐您进行全局安装，在使用全局安装的脚手架时，部分指令可能并不能达到您需要的效果，因此我们推荐您通过 `npx` 来使用本脚手架。
-:::
-
-## 开发与打包
-
-`creta` 内置了 `dev` 和 `dist` 指令，同时在初始化应用模板时已经为应用添加了对应的 `npm scripts`，保障了使用者的开发效率。
-
-我们继续上面的名为 `my-app` 的项目，接下来我们先进入到应用的根目录下：
-```bash
-cd my-app
-```
-
-接下来在根目录下执行 `npm run dev` 指令即可在开发模式下预览您的应用。
-
-当您完成开发后，可以执行 `npm run dist` 指令将您的代码构建为可执行文件。
+当您通过 `creta` 提供的调试脚本进行调试时，我们会对您的 ts 代码进行编译，并为您依次启动 vite 与 electron。当您尝试打包您的应用时，我们会根据您提供的信息将您的应用打包成可执行文件，并为您制作好更新包。
