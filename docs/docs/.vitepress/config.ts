@@ -16,6 +16,12 @@ export default defineConfig({
 		],
 	],
 	themeConfig: {
+		nav: [
+			{
+				text: 'Github Docs',
+				link: 'https://github.com/ch1ny/creta/tree/master/docs',
+			},
+		],
 		socialLinks: [
 			{ icon: 'github', link: 'https://github.com/ch1ny/' },
 			{
@@ -28,7 +34,11 @@ export default defineConfig({
 		],
 		sidebar: [
 			{
-				items: [{ text: '快速开始', link: '/' }],
+				text: 'Introduce',
+				items: [
+					{ text: '什么是 creta', link: '/' },
+					{ text: '快速开始', link: '/quick-start' },
+				],
 			},
 		],
 	},

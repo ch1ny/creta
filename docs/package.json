@@ -12,5 +12,8 @@
 		"dist": "vitepress build docs",
 		"build": "npm run dist",
 		"serve": "vitepress serve docs"
+	},
+	"devDependencies": {
+		"vue": "^3.2.47"
 	}
 }
