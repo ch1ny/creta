@@ -1,9 +1,12 @@
 import react from '@vitejs/plugin-react-swc';
+import { defineDevConfig } from 'creta/types';
 import path from 'path';
 import { defineConfig } from 'vite';
 
 const PROJECT_ROOT_DIR = path.resolve(__dirname, '../..');
-const { DEV_PORT } = require(path.resolve(PROJECT_ROOT_DIR, 'config', 'dev.config.js'));
+const { DEV_PORT = 7000 } = <ReturnType<typeof defineDevConfig>>(
+	require(path.resolve(PROJECT_ROOT_DIR, 'config', 'dev.config.js'))
+);
 
 // https://vitejs.dev/config/
 export default defineConfig({

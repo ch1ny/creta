@@ -28,7 +28,7 @@ const main = async () => {
 	// 2. 启动 electron
 	cp.execSync('tsc', { cwd: path.resolve(scriptsCwd, 'src', 'main') });
 	cp.execSync('tsc', { cwd: path.resolve(scriptsCwd, 'src', 'preload') });
-	const { DEV_PORT } = require(path.resolve(scriptsCwd, 'config/dev.config'));
+	const { DEV_PORT = 7000 } = require(path.resolve(scriptsCwd, 'config/dev.config'));
 	const electron = cp.spawn(COMMANDS.ELECTRON, ['.', `--port=${DEV_PORT}`], {
 		cwd: scriptsCwd,
 	});
