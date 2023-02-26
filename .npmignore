@@ -4,6 +4,7 @@ docs/
 
 node_modules/
 src/
+plugins/
 
 ./tsconfig.json
 

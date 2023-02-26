@@ -1,4 +1,6 @@
-module.exports = {
+const { defineDistConfig } = require('creta/types');
+
+module.exports = defineDistConfig({
 	UPDATE_FILES_PATH: {
 		win32: ['resources/app.asar'],
 		darwin: [
@@ -11,4 +13,4 @@ module.exports = {
 			'Resources/electron.icns', // 图标文件
 		],
 	},
-};
+});
