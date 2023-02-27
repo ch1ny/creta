@@ -1,12 +1,10 @@
+// cSpell: disable-next-line
+// @ts-nocheck
 import react from '@vitejs/plugin-react-swc';
-import { defineDevConfig } from 'creta/types';
 import path from 'path';
 import { defineConfig } from 'vite';
 
-const PROJECT_ROOT_DIR = path.resolve(__dirname, '../..');
-const { DEV_PORT = 7000 } = <ReturnType<typeof defineDevConfig>>(
-	require(path.resolve(PROJECT_ROOT_DIR, 'config', 'dev.config.js'))
-);
+const PROJECT_ROOT_DIR = process.cwd();
 
 // https://vitejs.dev/config/
 export default defineConfig({
@@ -14,13 +12,11 @@ export default defineConfig({
 	plugins: [react()],
 	resolve: {
 		alias: {
-			'@': __dirname,
+			'@': path.resolve(PROJECT_ROOT_DIR, 'src', 'render'),
 		},
 	},
 	publicDir: path.resolve(PROJECT_ROOT_DIR, 'public'),
-	server: {
-		port: DEV_PORT,
-	},
+	root: path.resolve(PROJECT_ROOT_DIR, 'src', 'render'),
 	build: {
 		outDir: path.resolve(PROJECT_ROOT_DIR, 'build', 'render'),
 	},
@@ -30,13 +26,6 @@ export default defineConfig({
 			// css模块化 文件以.module.[css|less|scss]结尾
 			generateScopedName: '[name]_[hash:base64:5]',
 			hashPrefix: 'prefix',
-		},
-		//* 预编译支持less
-		preprocessorOptions: {
-			less: {
-				// 支持内联 JavaScript
-				javascriptEnabled: true,
-			},
 		},
 	},
 });

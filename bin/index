@@ -20,6 +20,12 @@ program
 program.command('dev').description('Run your app in dev mode.').action(commands.dev);
 
 program
+	.command('build')
+	.description('Build your app source code.')
+	.alias('n')
+	.action(commands.build);
+
+program
 	.command('dist')
 	.description('Build your app source code and pack it.')
 	.alias('n')

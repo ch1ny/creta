@@ -38,6 +38,7 @@ export default defineConfig({
 				items: [
 					{ text: '什么是 creta', link: '/' },
 					{ text: '快速开始', link: '/quick-start' },
+					{ text: '配置 creta', link: '/configs' },
 				],
 			},
 		],

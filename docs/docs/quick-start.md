@@ -32,35 +32,23 @@ creta new my-app
 
 ![新建项目目录结构](/assets/new-project-dir.webp)
 
-上图就是我们通过 `creta-cli` 新建的一个 creta 应用的初始目录结构。最外层主要是由 `config`、`public` 和 `src` 三个目录组成。
-
-### config
-
-![config目录结构](/assets/config-dir.webp)
-
-其中，`config` 目录主要存放着项目的配置信息，包括开发配置以及打包配置。你可以通过引入我们提供的 `plugin` 来协助获取配置项的类型信息，辅助配置。
-
-### public
-
-![public目录结构](/assets/public-dir.webp)
+上图就是我们通过 `creta-cli` 新建的一个 creta 应用的初始目录结构。
 
 `public` 目录被视作 `vite` 的 [`publicDir`](https://cn.vitejs.dev/config/shared-options.html#publicdir)，作为静态资源服务的文件夹。你可以在 `src/render/vite.config.ts` 中修改相关配置。
 
-### src
-
 ![src目录结构](/assets/src-dir.webp)
 
-`src` 目录是一个 creta 应用最核心的部分，它存放着我们应用的源码文件。对应着我们对 electron 应用三部分的划分，我们将 `src` 分割为了对应的三部分：
+我们应用的源码存放在 `src` 目录下，我们根据 electron 应用的三个主要部分将它分割为了对应的三个子目录：
 
 - `main`: 主进程源码
 - `preload`: 预加载脚本源码
 - `render`: 渲染进程源码
 
-#### 主进程
+### 主进程
 
 主进程的入口位于 `src/main/core/bin.ts` 中，它是整个 electron 应用的入口文件，但是我们不建议您对它进行修改。您应该在 `src/main/index.ts` 中定义您自己的入口函数，并通过 `export default` 的方式将您的入口函数暴露出去。
 
-#### 预加载脚本
+### 预加载脚本
 
 通过[预加载脚本](https://www.electronjs.org/docs/latest/tutorial/process-model#preload-scripts)，您可以定义在您的窗口开始加载网页内容前应该加载哪些代码。它们运行在渲染进程当中，但是仍能访问 `Nodejs API` ，因此它们具有相对来说更多的权限。由于预加载脚本与渲染进程共享同一个全局 `Window` 接口，因此您可以在预加载脚本中向 `window` 暴露部分接口供其使用。
 
@@ -87,9 +75,11 @@ contextBridge.exposeInMainWorld('ipc', {
 
 ```
 
-#### 渲染进程
+### 渲染进程
 
-creta 的渲染进程使用 `vite` 进行构建，vite 配置文件位于 `src/render/vite.config.ts`。我们为项目添加了路径别名 `@`，它对应着目录 `src/render/`。并添加了 `css module` 相关配置以及针对 less 的预编译配置，您可以通过 `import styles from '*.module.less';` 进行使用。同样的，我们将相关配置暴露出来，也是希望开发者可以根据自身的需求进行**自定义**配置。
+creta 的渲染进程使用 `vite` 进行构建，vite 配置文件被我们隐藏在了 `creta` 依赖当中，位于 `node_modules/creta/vite.config.ts`。我们为项目添加了路径别名 `@`，它对应着目录 `src/render/`。并添加了 `css modules` 相关配置，您可以通过 `import styles from '*.module.css';` 进行使用。我们已经为您的渲染进程添加了 `less` 以及 `sass` 依赖，您可以在项目中直接使用。
+
+出于某种考量，我们没有选择将 vite 的配置文件直接暴露出来，但是你仍然可以在项目根目录下的 `creta.config.js` 中添加对应的配置项，以达到根据自身需求定制 vite 配置的目的。
 
 ## 调试你的第一个 creta 项目
 
