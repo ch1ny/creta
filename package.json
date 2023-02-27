@@ -1,6 +1,6 @@
 {
 	"name": "creta",
-	"version": "0.0.13",
+	"version": "0.1.1",
 	"bin": {
 		"creta": "bin/index"
 	},
@@ -23,7 +23,8 @@
 		"chalk": "4",
 		"commander": "^10.0.0",
 		"fs-extra": "^11.1.0",
-		"inquirer": "8"
+		"inquirer": "8",
+		"ts-node": "^10.9.1"
 	},
 	"keywords": [
 		"creta",

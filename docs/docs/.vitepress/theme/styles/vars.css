@@ -142,3 +142,7 @@
 	margin-inline: 0.15em;
 	text-shadow: 0 0 0.05em #fff;
 }
+
+.vp-doc :not(pre) > code {
+	background-color: #50d6ff26;
+}

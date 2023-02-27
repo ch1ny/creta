@@ -1,34 +1,10 @@
 import chalk from 'chalk';
-import cp from 'child_process';
 import fse from 'fs-extra';
 import path from 'path';
 import constants from '../constants';
+import { buildMain, buildPreload, buildRender } from '../utils';
 
 const { scriptsCwd } = constants;
-
-const buildRender = () =>
-	new Promise<void>((resolve) => {
-		cp.execSync('tsc&&vite build', {
-			cwd: path.resolve(scriptsCwd, 'src', 'render'),
-		});
-		resolve();
-	});
-
-const buildPreload = () =>
-	new Promise<void>((resolve) => {
-		cp.execSync('tsc', {
-			cwd: path.resolve(scriptsCwd, 'src', 'preload'),
-		});
-		resolve();
-	});
-
-const buildMain = () =>
-	new Promise<void>((resolve) => {
-		cp.execSync('tsc', {
-			cwd: path.resolve(scriptsCwd, 'src', 'main'),
-		});
-		resolve();
-	});
 
 const main = async () => {
 	console.log(chalk.bold.blueBright('1. 清空build目录'));

@@ -1,8 +1,10 @@
 import cp from 'child_process';
 import path from 'path';
+import { createServer } from 'vite';
 import constants from '../constants';
+import { buildMain, buildPreload, getCretaConfigs } from '../utils';
 
-const { scriptsCwd } = constants;
+const { cliDir, scriptsCwd } = constants;
 
 const COMMANDS =
 	process.platform === 'win32'
@@ -17,33 +19,22 @@ const COMMANDS =
 
 const main = async () => {
 	// 1. 启动渲染进程
-	const react = cp.spawn(COMMANDS.VITE, {
-		cwd: path.resolve(scriptsCwd, 'src', 'render'),
+	const { viteConfig = {} } = getCretaConfigs();
+	const viteServer = await createServer({
+		...viteConfig,
+		configFile: path.resolve(cliDir, 'vite.config.ts'),
 	});
-	react.stdout.on('data', (data) => {
-		console.log(`${data}`);
-	});
-	react.unref();
+
+	await viteServer.listen();
 
 	// 2. 启动 electron
-	cp.execSync('tsc', { cwd: path.resolve(scriptsCwd, 'src', 'main') });
-	cp.execSync('tsc', { cwd: path.resolve(scriptsCwd, 'src', 'preload') });
-	const { DEV_PORT = 7000 } = require(path.resolve(scriptsCwd, 'config/dev.config'));
-	const electron = cp.spawn(COMMANDS.ELECTRON, ['.', `--port=${DEV_PORT}`], {
+	await Promise.all([buildMain(), buildPreload()]);
+	const devPort = viteServer.config.server.port;
+	const electron = cp.spawn(COMMANDS.ELECTRON, ['.', `--port=${devPort}`], {
 		cwd: scriptsCwd,
 	});
 	electron.on('close', () => {
-		switch (process.platform) {
-			case 'win32':
-				cp.exec(`taskkill /pid ${react.pid} /T /F`);
-				break;
-			case 'darwin':
-				cp.exec(`kill -9 ${react.pid}`);
-				break;
-			// TODO: 完善其他平台下方法
-			case 'linux':
-				break;
-		}
+		viteServer.close();
 	});
 	electron.stdout.on('data', (data) => {
 		console.log(`${data}`);

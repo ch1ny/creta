@@ -4,6 +4,7 @@ import fse from 'fs-extra';
 import path from 'path';
 
 import constants from '../../constants';
+import { getCretaConfigs } from '../../utils';
 
 const { binDir, scriptsCwd } = constants;
 
@@ -17,8 +18,8 @@ export const buildUpdaterOnWin32 = async (appName: string, arch: 'x86' | 'x64') 
 	console.log(chalk.bold.blueBright('8. 生成更新文件'));
 	console.log(chalk.blueBright('8.1 复制需要更新的文件'));
 	const dirname = `${appName}-win32-${arch}`;
-	const { UPDATE_FILES_PATH = {} } = require(path.resolve(scriptsCwd, 'config/dist.config'));
-	const files: string[] = UPDATE_FILES_PATH['win32'] || [];
+	const { updateFilesPath = {} } = getCretaConfigs();
+	const files: string[] = updateFilesPath['win32'] || [];
 
 	const sourceDir = path.resolve(scriptsCwd, 'dist', dirname);
 

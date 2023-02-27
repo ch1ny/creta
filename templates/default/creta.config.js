@@ -1,7 +1,7 @@
-const { defineDistConfig } = require('creta/types');
+const { defineConfig } = require('creta/types');
 
-module.exports = defineDistConfig({
-	UPDATE_FILES_PATH: {
+module.exports = defineConfig({
+	updateFilesPath: {
 		win32: ['resources/app.asar'],
 		darwin: [
 			'Frameworks/ReactElectronTypescriptTemplate Helper (GPU).app/Contents/info.plist',
