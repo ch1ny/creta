@@ -4,15 +4,9 @@
 	xmlns:xlink="http://www.w3.org/1999/xlink"
 	width="1363.29345703125"
 	height="1500"
-	viewBox="-250, -250, 1500, 1500"
+	viewBox="-350 -250 1500 1500"
 >
-	<g
-		data-noun-id="30707"
-		data-attribution=""
-		transform="scale(1.0694382593430207)"
-		style="transform: translate(250px, 250px) scale(1.06944)"
-	>
-		<g>
+	<g>
 			<g>
 				<polygon
 					points="367.03,110.11 96.38,266.36 96.38,387.57 367.03,231.31 637.67,387.57 637.67,266.36   "
@@ -56,5 +50,4 @@
 				></polygon>
 			</g>
 		</g>
-	</g>
 </svg>

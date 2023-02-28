@@ -1,6 +1,6 @@
 {
 	"name": "creta",
-	"version": "0.1.1",
+	"version": "0.1.2",
 	"bin": {
 		"creta": "bin/index"
 	},
@@ -40,6 +40,7 @@
 		"type": "git",
 		"url": "https://github.com/ch1ny/creta.git"
 	},
+	"homepage": "https://creta.kira.host/",
 	"bugs": {
 		"url": "https://github.com/ch1ny/creta/issues"
 	},
