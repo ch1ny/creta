@@ -9,7 +9,7 @@ hero:
   text: Create React + Electron + TypeScript App.
   tagline: 帮您快速搭建基于 React 和 TypeScript 的 electron 应用
   image:
-    src: /assets/favicon.webp
+    src: https://assets.kira.host/image/creta_logo_colored.svg
     alt: Creta
   actions:
     - theme: brand

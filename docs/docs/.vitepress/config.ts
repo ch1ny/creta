@@ -37,10 +37,11 @@ export default defineConfig({
 				{
 					text: 'Introduce',
 					items: [
-						{ text: '为什么选择 creta', link: '/guide/why-creta' },
 						{ text: '什么是 creta', link: '/guide/creta' },
+						{ text: '为什么选择 creta', link: '/guide/why-creta' },
 						{ text: '快速开始', link: '/guide/quick-start' },
 						{ text: '配置 creta', link: '/guide/configs' },
+						{ text: 'creta 的安全哲学', link: '/guide/safety-philosophy' },
 					],
 				},
 			],
