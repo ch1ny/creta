@@ -10,6 +10,6 @@
 		"outDir": "../../build/preload",
 		"removeComments": true
 	},
-	"include": ["./**/*.ts"],
-	"exclude": ["node_modules/**/*"]
+	"include": ["./**/*"],
+	"exclude": ["node_modules/**/*", "./tsconfig.json", "./package.json"]
 }

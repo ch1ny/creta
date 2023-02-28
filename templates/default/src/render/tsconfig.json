@@ -23,5 +23,5 @@
 		}
 	},
 	"include": ["./**/*"],
-	"exclude": ["./tsconfig.json", "./tsconfig.node.json", "./vite.config.ts"]
+	"exclude": ["node_modules/**/*", "./tsconfig.json", "./package.json"]
 }

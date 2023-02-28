@@ -11,5 +11,6 @@
 		"outDir": "../../build/main",
 		"removeComments": true
 	},
-	"include": ["./**/*.ts"]
+	"include": ["./**/*"],
+	"exclude": ["node_modules/**/*", "./tsconfig.json", "./package.json"]
 }
