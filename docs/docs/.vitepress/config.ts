@@ -32,15 +32,19 @@ export default defineConfig({
 				link: 'tencent://AddContact/?fromId=45&fromSubId=1&subcmd=all&uin=1056317718&website=www.oicqzone.com',
 			},
 		],
-		sidebar: [
-			{
-				text: 'Introduce',
-				items: [
-					{ text: '什么是 creta', link: '/' },
-					{ text: '快速开始', link: '/quick-start' },
-					{ text: '配置 creta', link: '/configs' },
-				],
-			},
-		],
+		sidebar: {
+			'/guide/': [
+				{
+					text: 'Introduce',
+					items: [
+						{ text: '什么是 creta', link: '/guide/creta' },
+						{ text: '为什么选择 creta', link: '/guide/why-creta' },
+						{ text: '快速开始', link: '/guide/quick-start' },
+						{ text: '配置 creta', link: '/guide/configs' },
+						{ text: 'creta 的安全哲学', link: '/guide/safety-philosophy' },
+					],
+				},
+			],
+		},
 	},
 });

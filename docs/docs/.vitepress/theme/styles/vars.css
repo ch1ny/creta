@@ -3,13 +3,13 @@
  * -------------------------------------------------------------------------- */
 
 :root {
-	--vp-c-brand: #646cff;
-	--vp-c-brand-light: #747bff;
-	--vp-c-brand-lighter: #9499ff;
-	--vp-c-brand-lightest: #bcc0ff;
-	--vp-c-brand-dark: #535bf2;
-	--vp-c-brand-darker: #454ce1;
-	--vp-c-brand-dimm: rgba(100, 108, 255, 0.08);
+	--vp-c-brand: #569fed;
+	--vp-c-brand-light: #6daef5;
+	--vp-c-brand-lighter: #96c8fd;
+	--vp-c-brand-lightest: #aad3fe;
+	--vp-c-brand-dark: #3d8bde;
+	--vp-c-brand-darker: #1b69bd;
+	--vp-c-brand-dimm: #1b69bd24;
 }
 
 /**
@@ -34,9 +34,7 @@
 
 :root {
 	--vp-home-hero-name-color: transparent;
-	--vp-home-hero-name-background: -webkit-linear-gradient(120deg, #bd34fe 30%, #41d1ff);
-
-	--vp-home-hero-image-background-image: linear-gradient(-45deg, #bd34fe 50%, #47caff 50%);
+	--vp-home-hero-name-background: -webkit-linear-gradient(60deg, #3178c6 30%, #9feaf9);
 	--vp-home-hero-image-filter: blur(40px);
 }
 
