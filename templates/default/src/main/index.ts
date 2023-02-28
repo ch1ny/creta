@@ -14,37 +14,37 @@ export default async () => {
 		return app.getVersion();
 	});
 
-	app.on('ready', () => {
-		const { width: screenWidth, height: screenHeight } = screen.getPrimaryDisplay().workAreaSize;
-		screenSize.width = screenWidth;
-		screenSize.height = screenHeight;
+	await app.whenReady();
 
-		// 创建主窗口
-		const mainWindow = new BrowserWindow({
-			width: parseInt(`${screenWidth * 0.7}`),
-			height: parseInt(`${screenHeight * 0.8}`),
-			frame: false,
-			transparent: true,
-			show: false,
-			webPreferences: {
-				devTools: !IS_PACKAGED,
-				preload: path.join(PRELOAD_DIR, 'preload.js'),
-				webSecurity: false,
-			},
-		});
-		mainWindow.on('ready-to-show', () => {
-			mainWindow.show();
-		});
-		if (IS_PACKAGED) {
-			mainWindow.loadURL(
-				url.format({
-					pathname: path.resolve(ASAR_ROOT_PATH, './render/index.html'),
-					protocol: 'file:',
-					slashes: true,
-				})
-			);
-		} else {
-			mainWindow.loadURL(`http://127.0.0.1:${ARGS['--port']}/`);
-		}
+	const { width: screenWidth, height: screenHeight } = screen.getPrimaryDisplay().workAreaSize;
+	screenSize.width = screenWidth;
+	screenSize.height = screenHeight;
+
+	// 创建主窗口
+	const mainWindow = new BrowserWindow({
+		width: parseInt(`${screenWidth * 0.7}`),
+		height: parseInt(`${screenHeight * 0.8}`),
+		frame: false,
+		transparent: true,
+		show: false,
+		webPreferences: {
+			devTools: !IS_PACKAGED,
+			preload: path.join(PRELOAD_DIR, 'preload.js'),
+			webSecurity: false,
+		},
 	});
+	mainWindow.on('ready-to-show', () => {
+		mainWindow.show();
+	});
+	if (IS_PACKAGED) {
+		mainWindow.loadURL(
+			url.format({
+				pathname: path.resolve(ASAR_ROOT_PATH, './render/index.html'),
+				protocol: 'file:',
+				slashes: true,
+			})
+		);
+	} else {
+		mainWindow.loadURL(`http://127.0.0.1:${ARGS['--port']}/`);
+	}
 };

@@ -29,6 +29,12 @@ interface IConfig {
 	 */
 	customUpdater?: boolean;
 	/**
+	 * 当主进程或预加载脚本代码发生改变时，
+	 * 立即编译代码并重启 electron 应用，
+	 * 默认为 true
+	 */
+	relaunchOnChange?: boolean;
+	/**
 	 * 对应平台下更新包需要打包的文件
 	 */
 	updateFilesPath?: {
