@@ -39,7 +39,7 @@ export default async () => {
 	if (IS_PACKAGED) {
 		mainWindow.loadURL(
 			url.format({
-				pathname: path.resolve(ASAR_ROOT_PATH, './render/index.html'),
+				pathname: path.resolve(ASAR_ROOT_PATH, './renderer/index.html'),
 				protocol: 'file:',
 				slashes: true,
 			})

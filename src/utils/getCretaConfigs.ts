@@ -7,12 +7,12 @@ interface IConfig {
 	 * 编译结束后执行的脚本
 	 * - **main**: 主进程编译完成后执行的脚本
 	 * - **preload**: 预加载脚本编译完成后执行的脚本
-	 * - **render**: 渲染进程编译完成后执行的脚本
+	 * - **renderer**: 渲染进程编译完成后执行的脚本
 	 */
 	afterBuildScripts: {
 		main?: string;
 		preload?: string;
-		render?: string;
+		renderer?: string;
 	};
 	/**
 	 * 打包完成后执行的脚本

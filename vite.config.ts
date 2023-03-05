@@ -12,13 +12,13 @@ export default defineConfig({
 	plugins: [react()],
 	resolve: {
 		alias: {
-			'@': path.resolve(PROJECT_ROOT_DIR, 'src', 'render'),
+			'@': path.resolve(PROJECT_ROOT_DIR, 'src', 'renderer'),
 		},
 	},
 	publicDir: path.resolve(PROJECT_ROOT_DIR, 'public'),
-	root: path.resolve(PROJECT_ROOT_DIR, 'src', 'render'),
+	root: path.resolve(PROJECT_ROOT_DIR, 'src', 'renderer'),
 	build: {
-		outDir: path.resolve(PROJECT_ROOT_DIR, 'build', 'render'),
+		outDir: path.resolve(PROJECT_ROOT_DIR, 'build', 'renderer'),
 	},
 	css: {
 		//* css模块化
