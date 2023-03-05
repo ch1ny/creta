@@ -1,4 +1,29 @@
+import fs from 'fs';
+import path from 'path';
+import { SitemapStream } from 'sitemap';
 import { defineConfig } from 'vitepress';
+
+const sideBar = [
+	{
+		text: 'Introduce',
+		items: [
+			{ text: '什么是 creta', link: '/guide/creta' },
+			{ text: '为什么选择 creta', link: '/guide/why-creta' },
+			{ text: '快速开始', link: '/guide/quick-start' },
+			{ text: '配置 creta', link: '/guide/configs' },
+			{ text: 'creta 的安全哲学', link: '/guide/safety-philosophy' },
+		],
+	},
+	{
+		text: 'Features',
+		items: [
+			{ text: '快速重载', link: '/feature/relaunch-electron' },
+			{ text: '轻量更新', link: '/feature/lite-update' },
+		],
+	},
+];
+
+const links: { url: string; lastmod?: number }[] = [];
 
 export default defineConfig({
 	title: 'creta',
@@ -33,18 +58,24 @@ export default defineConfig({
 			},
 		],
 		sidebar: {
-			'/guide/': [
-				{
-					text: 'Introduce',
-					items: [
-						{ text: '什么是 creta', link: '/guide/creta' },
-						{ text: '为什么选择 creta', link: '/guide/why-creta' },
-						{ text: '快速开始', link: '/guide/quick-start' },
-						{ text: '配置 creta', link: '/guide/configs' },
-						{ text: 'creta 的安全哲学', link: '/guide/safety-philosophy' },
-					],
-				},
-			],
+			'/guide/': sideBar,
+			'/feature/': sideBar,
 		},
+	},
+	transformHtml(_code, id, ctx) {
+		if (/[\\/]404\.html$/.test(id)) return;
+
+		links.push({
+			url: ctx.pageData.relativePath.replace(/((^|\/)index)?\.md$/, '$2.html'),
+			lastmod: ctx.pageData.lastUpdated,
+		});
+	},
+	buildEnd(siteConfig) {
+		const { outDir } = siteConfig;
+		const sitemap = new SitemapStream({ hostname: 'https://creta.kira.host' });
+		const sitemapWriteStream = fs.createWriteStream(path.resolve(outDir, 'sitemap.xml'));
+		sitemap.pipe(sitemapWriteStream);
+		links.forEach((link) => sitemap.write(link));
+		sitemap.end();
 	},
 });
