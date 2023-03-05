@@ -18,7 +18,7 @@ const COMMANDS =
 
 const main = async () => {
 	// 1. 启动渲染进程
-	const { relaunchOnChange = true, viteConfig = {} } = getCretaConfigs();
+	const { electronFastReload = true, viteConfig = {} } = getCretaConfigs();
 	const viteServer = await createServer({
 		...viteConfig,
 		configFile: path.resolve(cliDir, 'vite.config.ts'),
@@ -28,7 +28,7 @@ const main = async () => {
 	const devPort = viteServer.config.server.port;
 
 	// 2. 启动 electron
-	if (relaunchOnChange) {
+	if (electronFastReload) {
 		const tscWatchPrograms = {
 			main: undefined as any,
 			preload: undefined as any,

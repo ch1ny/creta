@@ -3,10 +3,9 @@ import path from 'path';
 import { build } from 'vite';
 import constants from '../constants';
 import { getCretaConfigs } from './getCretaConfigs';
-import { getResolvedScriptsPathRelativeToConfigDir } from './getScriptsPath';
 
 const { cliDir, scriptsCwd } = constants;
-const { afterBuildScripts = {}, viteConfig = {} } = getCretaConfigs();
+const { viteConfig = {} } = getCretaConfigs();
 
 export const buildRender = () =>
 	build({
@@ -19,18 +18,6 @@ export const buildPreload = () =>
 		cp.execSync('tsc', {
 			cwd: path.resolve(scriptsCwd, 'src', 'preload'),
 		});
-		const script = afterBuildScripts['preload'];
-		if (
-			!!script &&
-			typeof script === 'string' &&
-			(script.endsWith('.js') || script.endsWith('.ts'))
-		) {
-			const nodeCmd = script.endsWith('.js') ? 'node' : 'ts-node';
-			cp.execSync(`${nodeCmd} ${getResolvedScriptsPathRelativeToConfigDir(script)}`, {
-				cwd: scriptsCwd,
-				stdio: 'inherit',
-			});
-		}
 		resolve();
 	});
 
@@ -39,17 +26,5 @@ export const buildMain = () =>
 		cp.execSync('tsc', {
 			cwd: path.resolve(scriptsCwd, 'src', 'main'),
 		});
-		const script = afterBuildScripts['main'];
-		if (
-			!!script &&
-			typeof script === 'string' &&
-			(script.endsWith('.js') || script.endsWith('.ts'))
-		) {
-			const nodeCmd = script.endsWith('.js') ? 'node' : 'ts-node';
-			cp.execSync(`${nodeCmd} ${getResolvedScriptsPathRelativeToConfigDir(script)}`, {
-				cwd: scriptsCwd,
-				stdio: 'inherit',
-			});
-		}
 		resolve();
 	});

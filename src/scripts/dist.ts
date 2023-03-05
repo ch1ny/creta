@@ -3,13 +3,7 @@ import cp from 'child_process';
 import fse from 'fs-extra';
 import path from 'path';
 import constants from '../constants';
-import {
-	buildMain,
-	buildPreload,
-	buildRender,
-	getCretaConfigs,
-	getResolvedScriptsPathRelativeToConfigDir,
-} from '../utils';
+import { buildMain, buildPreload, buildRender, getCretaConfigs } from '../utils';
 import { buildUpdaterOnDarwin } from './updater/darwin';
 import { buildUpdaterOnWin32 } from './updater/win32';
 const { scriptsCwd } = constants;
@@ -17,18 +11,9 @@ const { scriptsCwd } = constants;
 const main = async () => {
 	const {
 		/**
-		 * 代码完成编译后，
-		 * 准备打包前执行的脚本
-		 */
-		beforeDist,
-		/**
-		 * 打包完成后执行的脚本
-		 */
-		afterDist,
-		/**
 		 * 自行设计更新方案
 		 */
-		customUpdater = false,
+		useCretaUpdater = true,
 	} = getCretaConfigs();
 
 	console.log(chalk.bold.blueBright('1. 清空build目录'));
@@ -74,21 +59,6 @@ const main = async () => {
 	cp.execSync('npm install', {
 		cwd: path.resolve(scriptsCwd, 'build'),
 	});
-
-	// 执行预打包脚本
-	if (
-		!!beforeDist &&
-		typeof beforeDist === 'string' &&
-		(beforeDist.endsWith('.js') || beforeDist.endsWith('.ts'))
-	) {
-		const nodeCmd = beforeDist.endsWith('.js') ? 'node' : 'ts-node';
-		console.log(chalk.blueBright('执行预打包脚本'));
-		const beforeDistPath = getResolvedScriptsPathRelativeToConfigDir(beforeDist);
-		cp.execSync(`${nodeCmd} ${beforeDistPath}`, {
-			cwd: scriptsCwd,
-			stdio: 'inherit',
-		});
-	}
 
 	console.log(chalk.bold.blueBright('5. 设置electron-packager打包参数'));
 	const inquirer = (await import('inquirer')).default;
@@ -143,7 +113,7 @@ const main = async () => {
 	cp.execSync(`electron-packager ${electronPackagerOptions.join(' ')}`);
 
 	// 如果开发者设置了自行更新则不打包更新包及安装程序
-	if (!customUpdater) {
+	if (useCretaUpdater) {
 		switch (platform) {
 			case 'darwin':
 				await buildUpdaterOnDarwin(appName, arch);
@@ -154,21 +124,6 @@ const main = async () => {
 			default:
 			// no-op;
 		}
-	}
-
-	// 执行打包后脚本
-	if (
-		!!afterDist &&
-		typeof afterDist === 'string' &&
-		(afterDist.endsWith('.js') || afterDist.endsWith('.ts'))
-	) {
-		const nodeCmd = afterDist.endsWith('.js') ? 'node' : 'ts-node';
-		console.log(chalk.blueBright('执行打包后脚本'));
-		const afterDistPath = getResolvedScriptsPathRelativeToConfigDir(afterDist);
-		cp.execSync(`${nodeCmd} ${afterDistPath}`, {
-			cwd: scriptsCwd,
-			stdio: 'inherit',
-		});
 	}
 };
 
