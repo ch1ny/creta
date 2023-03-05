@@ -69,6 +69,7 @@ const main = async () => {
 			EOL: '\n',
 		}
 	);
+
 	// 目前将 node_modules 与项目一并打包
 	cp.execSync('npm install', {
 		cwd: path.resolve(scriptsCwd, 'build'),
@@ -142,7 +143,7 @@ const main = async () => {
 	cp.execSync(`electron-packager ${electronPackagerOptions.join(' ')}`);
 
 	// 如果开发者设置了自行更新则不打包更新包及安装程序
-	if (!!customUpdater) {
+	if (!customUpdater) {
 		switch (platform) {
 			case 'darwin':
 				await buildUpdaterOnDarwin(appName, arch);

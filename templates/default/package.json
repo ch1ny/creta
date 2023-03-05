@@ -10,18 +10,20 @@
 	],
 	"scripts": {
 		"dev": "creta dev",
-		"dev:view": "cd ./src/render&&vite",
+		"dev:view": "cd ./src/renderer&&vite",
 		"build": "creta build",
-		"build:render": "cd ./src/render&&tsc&&vite build",
+		"build:renderer": "cd ./src/renderer&&tsc&&vite build",
 		"build:main": "cd ./src/main&&tsc",
 		"build:preload": "cd ./src/preload&&tsc",
-		"dist": "creta dist"
+		"dist": "creta dist",
+		"format": "prettier --write ."
 	},
 	"devDependencies": {
 		"@types/node": "^18.14.2",
 		"electron": "^22.0.2",
 		"electron-packager": "^17.1.1",
 		"creta": "latest",
+		"prettier": "^2.8.4",
 		"typescript": "^4.9.4",
 		"vite": "^4.1.4"
 	}

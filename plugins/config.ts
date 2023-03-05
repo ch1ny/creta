@@ -16,7 +16,7 @@ interface IConfig {
 		/**
 		 * 渲染进程编译完成后执行的脚本
 		 */
-		render?: string;
+		renderer?: string;
 	};
 	/**
 	 * 打包完成后执行的脚本

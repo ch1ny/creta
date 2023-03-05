@@ -36,7 +36,7 @@ contextBridge.exposeInMainWorld('ipc', {
 });
 ```
 ```ts
-// src/render/global.d.ts
+// src/renderer/global.d.ts
 declare interface Window {
 	ipc: {
 		on: (channel: string, cb: Function) => void;
