@@ -15,3 +15,6 @@ creta-updater/
 gulpfile.js
 
 tsconfig.*json
+!templates/**/src/**/tsconfig.*json
+
+!templates/**/.gitignore
