@@ -64,7 +64,6 @@ const copyTemplate = async (props: IProjectProps, projectDir: string) => {
 					filePath.endsWith('build') ||
 					filePath.endsWith('dist') ||
 					filePath.endsWith('node_modules') ||
-					filePath.endsWith(`updater${path.sep}target`) ||
 					filePath.endsWith('.yalc')
 				)
 					return false;
@@ -75,11 +74,18 @@ const copyTemplate = async (props: IProjectProps, projectDir: string) => {
 		},
 	});
 
-	const { projectName, projectVersion, projectAuthor, projectLicense } = props;
+	/**
+	 * 重命名 .gitignore
+	 * 因为 npm 会将 .gitignore 重命名为 .npmignore
+	 */
+	fse.rename(path.resolve(projectDir, 'creta.gitignore'), path.resolve(projectDir, '.gitignore'));
+
+	const { projectName, projectDescription, projectVersion, projectAuthor, projectLicense } = props;
 	// 重写 package.json
 	const packageJson = await fse.readJson(path.join(projectDir, 'package.json'));
 	packageJson.name = projectName;
 	packageJson.version = projectVersion;
+	packageJson.description = projectDescription;
 	packageJson.author = projectAuthor;
 	packageJson.license = projectLicense;
 	await fse.writeJson(path.join(projectDir, 'package.json'), packageJson, {
