@@ -72,7 +72,6 @@ contextBridge.exposeInMainWorld('ipc', {
 		ipcRenderer.removeListener(channel, cb);
 	},
 });
-
 ```
 
 ### 渲染进程
@@ -94,9 +93,9 @@ creta 的渲染进程使用 `vite` 进行构建，vite 配置文件被我们隐�
 
 ## 将你的 creta 应用打包
 
-当一切开发工作都完成后，你希望将你的 electron 应用打包成可执行程序并发布出去。在项目根目录下执行指令 `npm run dist`，它会将你的应用代码进行编译，并执行打包的相关逻辑，你只需要根据提示输入相关信息，即可得到打包后的应用程序。
-下面是我们在 win32 平台上将应用打包为 x64 架构的应用的示例：
+当一切开发工作都完成后，你希望将你的 electron 应用打包成可执行程序并发布出去。在项目根目录下执行指令 `npm run dist`，它会将你的应用代码进行编译，并执行打包的相关逻辑，你只需要勾选需要构建的目标平台，即可得到打包后的应用程序。
+下面是我们在 win32 平台上将应用打包为 x64、ia32 架构的应用的示例：
 
-![win32-x64](/assets/dist-on-win32-x64.webp)
+![win32-x64](/assets/run-dist.webp)
 
-打包完毕后，你会在项目根目录的 `dist` 文件夹下找到构建后的可执行程序。
+creta 的打包基于 [`electron-builder`](https://github.com/electron-userland/electron-builder) ，我们提供了基本的配置，但您同样可以通过 [`creta.config.js`](/configs/all-configs.html#electronbuilderconfig) 定制属于您的打包方案。

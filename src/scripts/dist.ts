@@ -3,34 +3,11 @@ import cp from 'child_process';
 import fse from 'fs-extra';
 import path from 'path';
 import constants from '../constants';
-import {
-	buildMain,
-	buildPreload,
-	buildRender,
-	getCretaConfigs,
-	getResolvedScriptsPathRelativeToConfigDir,
-} from '../utils';
-import { buildUpdaterOnDarwin } from './updater/darwin';
-import { buildUpdaterOnWin32 } from './updater/win32';
+import { buildMain, buildPreload, buildRender } from '../utils';
+import pack from '../utils/pack';
 const { scriptsCwd } = constants;
 
 const main = async () => {
-	const {
-		/**
-		 * 代码完成编译后，
-		 * 准备打包前执行的脚本
-		 */
-		beforeDist,
-		/**
-		 * 打包完成后执行的脚本
-		 */
-		afterDist,
-		/**
-		 * 自行设计更新方案
-		 */
-		customUpdater = false,
-	} = getCretaConfigs();
-
 	console.log(chalk.bold.blueBright('1. 清空build目录'));
 	fse.emptyDirSync(path.resolve(scriptsCwd, 'build'));
 
@@ -75,101 +52,39 @@ const main = async () => {
 		cwd: path.resolve(scriptsCwd, 'build'),
 	});
 
-	// 执行预打包脚本
-	if (
-		!!beforeDist &&
-		typeof beforeDist === 'string' &&
-		(beforeDist.endsWith('.js') || beforeDist.endsWith('.ts'))
-	) {
-		const nodeCmd = beforeDist.endsWith('.js') ? 'node' : 'ts-node';
-		console.log(chalk.blueBright('执行预打包脚本'));
-		const beforeDistPath = getResolvedScriptsPathRelativeToConfigDir(beforeDist);
-		cp.execSync(`${nodeCmd} ${beforeDistPath}`, {
-			cwd: scriptsCwd,
-			stdio: 'inherit',
-		});
-	}
-
-	console.log(chalk.bold.blueBright('5. 设置electron-packager打包参数'));
+	console.log(chalk.bold.blueBright('5. 选择 electron-builder 构建目标平台'));
+	const platform = process.platform;
 	const inquirer = (await import('inquirer')).default;
-	const platform = process.platform; // TODO: 交叉编译支持
-	const { arch, overwrite } = await inquirer.prompt([
-		{
-			name: 'arch',
-			message: '请选择目标架构',
-			type: 'list',
-			choices: ['x64', 'x86'],
-		},
-		{
-			name: 'overwrite',
-			message: '是否覆盖',
-			type: 'list',
-			choices: ['Y', 'N'],
-		},
-	]);
-	const appName = packageName
-		.split('/')
-		.reverse()[0]
-		.split('-')
-		.map((str: string) => `${str.substring(0, 1).toUpperCase()}${str.substring(1)}`)
-		.join('');
-	const electronPackagerOptions = [
-		path.resolve(scriptsCwd, 'build'),
-		appName,
-		`--platform=${platform}`,
-		`--arch=${arch}`,
-		`--out`,
-		`${path.resolve(scriptsCwd, 'dist/')}`,
-		`--asar`,
-		overwrite === 'Y' ? '--overwrite' : '',
-	];
-
-	if (platform === 'win32') {
-		const { needAdmin } = await inquirer.prompt([
+	const { targets } = await inquirer.prompt({
+		name: 'targets',
+		message: '请选择目标平台(多选)',
+		type: 'checkbox',
+		choices: [
 			{
-				name: 'needAdmin',
-				message: '是否需要管理员权限',
-				type: 'list',
-				choices: ['N', 'Y'],
+				name: 'windows',
+				value: 'win32',
+				checked: platform === 'win32',
 			},
-		]);
-		if (needAdmin === 'Y')
-			electronPackagerOptions.push(
-				'--win32metadata.requested-execution-level=requireAdministrator'
-			);
+			{
+				name: 'macOS',
+				value: 'darwin',
+				checked: platform === 'darwin',
+			},
+			{
+				name: 'linux',
+				value: 'linux',
+				checked: platform === 'linux',
+			},
+		],
+	});
+
+	if (targets.length === 0) {
+		console.log(chalk.yellow('[WARN]'), '未选择目标平台');
+		return;
 	}
 
-	console.log(chalk.bold.blueBright('6. electron-packager打包可执行文件'));
-	cp.execSync(`electron-packager ${electronPackagerOptions.join(' ')}`);
-
-	// 如果开发者设置了自行更新则不打包更新包及安装程序
-	if (!customUpdater) {
-		switch (platform) {
-			case 'darwin':
-				await buildUpdaterOnDarwin(appName, arch);
-				break;
-			case 'win32':
-				await buildUpdaterOnWin32(appName, arch);
-				break;
-			default:
-			// no-op;
-		}
-	}
-
-	// 执行打包后脚本
-	if (
-		!!afterDist &&
-		typeof afterDist === 'string' &&
-		(afterDist.endsWith('.js') || afterDist.endsWith('.ts'))
-	) {
-		const nodeCmd = afterDist.endsWith('.js') ? 'node' : 'ts-node';
-		console.log(chalk.blueBright('执行打包后脚本'));
-		const afterDistPath = getResolvedScriptsPathRelativeToConfigDir(afterDist);
-		cp.execSync(`${nodeCmd} ${afterDistPath}`, {
-			cwd: scriptsCwd,
-			stdio: 'inherit',
-		});
-	}
+	console.log(chalk.bold.blueBright('6. electron-builder 打包可执行程序'));
+	await pack(targets);
 };
 
 main();
