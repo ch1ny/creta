@@ -22,13 +22,13 @@ program.command('dev').description('Run your app in dev mode.').action(commands.
 program
 	.command('build')
 	.description('Build your app source code.')
-	.alias('n')
+	.alias('b')
 	.action(commands.build);
 
 program
 	.command('dist')
 	.description('Build your app source code and pack it.')
-	.alias('n')
+	.alias('d')
 	.action(commands.dist);
 
 program

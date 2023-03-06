@@ -21,6 +21,10 @@ const sideBar = [
 			{ text: '轻量更新', link: '/feature/lite-update' },
 		],
 	},
+	{
+		text: 'Configs',
+		items: [{ text: '完整配置', link: '/configs/all-configs' }],
+	},
 ];
 
 const links: { url: string; lastmod?: number }[] = [];
@@ -60,6 +64,7 @@ export default defineConfig({
 		sidebar: {
 			'/guide/': sideBar,
 			'/feature/': sideBar,
+			'/configs/': sideBar,
 		},
 	},
 	transformHtml(_code, id, ctx) {

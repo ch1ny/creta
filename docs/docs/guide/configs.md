@@ -23,5 +23,30 @@ module.exports = defineConfig({
 		},
 	},
 });
-
 ```
+
+## 情景配置
+
+如果您的配置文件需要根据不同模式（`development` 或 `production`）来决定导出，您可以选择通过导出下面这样的一个函数的方式：
+
+```js
+const { defineConfig } = require('creta/types');
+
+module.exports = defineConfig(({ mode }) => {
+	if (mode === 'development') {
+		return {
+			viteConfig: {
+				server: {
+					port: 1420, // 配置 vite 调试时使用的端口
+				},
+			},
+		};
+	} else {
+		return {
+			useCretaUpdater: false, // 不使用 creta 的更新方案
+		}
+	}
+});
+```
+
+## [完整配置](/configs/all-configs.html)

@@ -1,3 +1,4 @@
+import type { Configuration } from 'electron-builder';
 import path from 'path';
 import type { InlineConfig } from 'vite';
 import constants from '../constants';
@@ -8,6 +9,10 @@ interface IConfig {
 	 * 若该项为 `false` 打包时不会触发更新包相关逻辑
 	 */
 	useCretaUpdater?: boolean;
+	/**
+	 * electron-builder 配置项
+	 */
+	electronBuilderConfig?: Configuration;
 	/**
 	 * 当主进程或预加载脚本代码发生改变时，
 	 * 立即编译代码并重启 electron 应用，

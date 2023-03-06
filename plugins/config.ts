@@ -1,11 +1,11 @@
+import type { Configuration } from 'electron-builder';
 import type { InlineConfig } from 'vite';
 
 interface IConfig {
 	/**
-	 * 是否需要自定义更新方案
-	 * 若该项为 `true` 打包时不会触发更新包相关逻辑
+	 * electron-builder 配置项
 	 */
-	useCretaUpdater?: boolean;
+	electronBuilderConfig?: Configuration;
 	/**
 	 * 当主进程或预加载脚本代码发生改变时，
 	 * 立即编译代码并重启 electron 应用，
@@ -16,10 +16,34 @@ interface IConfig {
 	 * 对应平台下更新包需要打包的文件
 	 */
 	updateFilesPath?: {
-		win32?: string[];
-		darwin?: string[];
-		linux?: string[];
+		win32?:
+			| string[]
+			| {
+					ia32?: string[];
+					x64?: string[];
+			  };
+		darwin?:
+			| string[]
+			| {
+					ia32?: string[];
+					x64?: string[];
+					arm64?: string[];
+					armv7l?: string[];
+					universal?: string[];
+			  };
+		linux?:
+			| string[]
+			| {
+					x64?: string[];
+					arm64?: string[];
+					armv7l?: string[];
+			  };
 	};
+	/**
+	 * 是否使用 creta 轻量更新方案
+	 * 若该项为 `false` 打包时不会触发更新包相关逻辑
+	 */
+	useCretaUpdater?: boolean;
 	/**
 	 * vite 配置
 	 */
