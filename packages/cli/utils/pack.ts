@@ -37,14 +37,14 @@ function resolveFunction<T>(executor: T | string, name: string): T {
 }
 
 type TPlatform = 'win32' | 'darwin' | 'linux';
-export default (targets: TPlatform[]) => {
+export default async (targets: TPlatform[]) => {
 	const {
 		electronBuilderConfig: { afterPack: userConfigAfterPack, ...electronBuilderConfig } = {},
 		/**
 		 * 自行设计更新方案
 		 */
 		useCretaUpdater = true,
-	} = getCretaConfigs();
+	} = await getCretaConfigs();
 
 	const builder: typeof import('electron-builder') = require('electron-builder');
 

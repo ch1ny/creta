@@ -1,5 +1,4 @@
 node_modules/
-lib/
 
 package-lock.json
 yarn.lock
@@ -7,3 +6,9 @@ yarn.lock
 target/
 
 bin/exe/*
+
+cli
+plugins
+
+!packages/cli
+!packages/plugins

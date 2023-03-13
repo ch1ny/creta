@@ -3,9 +3,7 @@
 docs/
 
 node_modules/
-src/
-
-./tsconfig.json
+packages/
 
 yarn.lock
 

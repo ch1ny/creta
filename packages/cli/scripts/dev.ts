@@ -18,7 +18,7 @@ const COMMANDS =
 
 const main = async () => {
 	// 1. 启动渲染进程
-	const { electronFastReload = true, viteConfig = {} } = getCretaConfigs();
+	const { electronFastReload = true, viteConfig = {} } = await getCretaConfigs();
 	const viteServer = await createServer({
 		...viteConfig,
 		configFile: path.resolve(cretaRootDir, 'vite.config.ts'),

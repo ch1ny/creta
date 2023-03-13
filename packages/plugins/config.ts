@@ -1,7 +1,7 @@
 import type { Configuration } from 'electron-builder';
 import type { InlineConfig } from 'vite';
 
-interface IConfig {
+export interface CretaConfig {
 	/**
 	 * electron-builder 配置项
 	 */
@@ -50,9 +50,9 @@ interface IConfig {
 	viteConfig?: Omit<InlineConfig, 'configFile'>;
 }
 
-type TDefineConfigFn = (params: { mode: 'development' | 'production' }) => IConfig;
+type TDefineCretaConfigFn = (params: { mode: 'development' | 'production' }) => CretaConfig;
 
-export const defineConfig = (param: IConfig | TDefineConfigFn) => {
+export const defineConfig = (param: CretaConfig | TDefineCretaConfigFn) => {
 	if (typeof param !== 'function') return param;
 
 	return param({

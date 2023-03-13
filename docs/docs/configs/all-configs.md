@@ -2,7 +2,7 @@
 
 ## electronBuilderConfig
 
-`electron-builder` build 配置，用于 `dist` 命令构建应用分发版本。creta 已做好一定程度的预配置，您可以向 `creta.config.js` 的 `electronBuilderConfig` 加入配置来覆盖我们的原有配置。
+`electron-builder` build 配置，用于 `dist` 命令构建应用分发版本。creta 已做好一定程度的预配置，您可以向 `creta.config` 的 `electronBuilderConfig` 加入配置来覆盖我们的原有配置。
 
  creta 默认的部分配置项如下，完整配置可参考 [`electron-builder`](https://github.com/electron-userland/electron-builder) 。：
 
@@ -115,9 +115,7 @@ vite 相关配置，完整配置请参阅 [配置 Vite](https://cn.vitejs.dev/co
 creta 默认 `vite.config.ts` 内容如下，用户可通过 `viteConfig` 覆盖默认配置。
 
 ```ts
-// cSpell: disable-next-line
-// @ts-nocheck
-import react from '@vitejs/plugin-react-swc';
+import react from '@vitejs/plugin-react';
 import path from 'path';
 import { defineConfig } from 'vite';
 
@@ -150,8 +148,10 @@ export default defineConfig({
 
 ## 完整配置参考
 
-```js
-{
+```ts
+import { defineConfig } from 'creta/plugins';
+
+export default defineConfig({
   electronBuilderConfig: {
     productName: 'creta-app',
     appId: 'org.creta.app',
@@ -235,5 +235,5 @@ export default defineConfig({
       },
     },
   },
-}
+});
 ```
