@@ -9,16 +9,16 @@ const tsPlugProject = ts.createProject('tsconfig.plug.json');
 
 gulp.task('clean', function () {
 	return gulp
-		.src(['lib', 'types', 'bin/exe'], { read: false, allowEmpty: true })
-		.pipe(clean(['lib', 'types', 'bin/exe']));
+		.src(['lib', 'bin/exe'], { read: false, allowEmpty: true })
+		.pipe(clean(['lib', 'bin/exe']));
 });
 
 gulp.task('tsc-core', function () {
-	return tsCoreProject.src().pipe(tsCoreProject()).pipe(gulp.dest('lib'));
+	return tsCoreProject.src().pipe(tsCoreProject()).pipe(gulp.dest('lib/core'));
 });
 
 gulp.task('tsc-plug', function () {
-	return tsPlugProject.src().pipe(tsPlugProject()).pipe(gulp.dest('types'));
+	return tsPlugProject.src().pipe(tsPlugProject()).pipe(gulp.dest('lib/plugins'));
 });
 
 gulp.task('rust-updater', function () {

@@ -2,12 +2,12 @@ import cp from 'child_process';
 import path from 'path';
 import constants from '../constants';
 
-const { libDir, scriptsCwd } = constants;
+const { libCoreDir, scriptsCwd } = constants;
 
 export default async () => {
-	const buildScriptPath = path.join(libDir, 'scripts', 'build.js');
+	const distScriptPath = path.join(libCoreDir, 'scripts', 'dist.js');
 	process.env.CRETA_ENV = 'production';
-	cp.execSync(`node ${buildScriptPath}`, {
+	cp.execSync(`node ${distScriptPath}`, {
 		cwd: scriptsCwd,
 		stdio: 'inherit',
 	});

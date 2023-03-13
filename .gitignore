@@ -1,6 +1,5 @@
 node_modules/
 lib/
-types/
 
 package-lock.json
 yarn.lock

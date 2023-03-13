@@ -4,13 +4,13 @@ import { build } from 'vite';
 import constants from '../constants';
 import { getCretaConfigs } from './getCretaConfigs';
 
-const { cliDir, scriptsCwd } = constants;
+const { cretaRootDir, scriptsCwd } = constants;
 const { viteConfig = {} } = getCretaConfigs();
 
 export const buildRender = () =>
 	build({
 		...viteConfig,
-		configFile: path.resolve(cliDir, 'vite.config.ts'),
+		configFile: path.resolve(cretaRootDir, 'vite.config.ts'),
 	});
 
 export const buildPreload = () =>

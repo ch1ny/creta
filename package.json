@@ -1,12 +1,13 @@
 {
 	"name": "creta",
-	"version": "0.1.4",
+	"version": "0.2.1",
 	"bin": {
 		"creta": "bin/index"
 	},
 	"description": "A CLI to build a react+electron+typescript App",
 	"author": "德布罗煜",
 	"license": "MIT",
+	"types": "./creta.d.ts",
 	"scripts": {
 		"prepublishOnly": "gulp"
 	},

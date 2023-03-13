@@ -3,7 +3,7 @@ import { createServer } from 'vite';
 import constants from '../constants';
 import { buildMain, buildPreload, getCretaConfigs, runElectron, tscWatch } from '../utils';
 
-const { cliDir, scriptsCwd } = constants;
+const { cretaRootDir, scriptsCwd } = constants;
 
 const COMMANDS =
 	process.platform === 'win32'
@@ -21,7 +21,7 @@ const main = async () => {
 	const { electronFastReload = true, viteConfig = {} } = getCretaConfigs();
 	const viteServer = await createServer({
 		...viteConfig,
-		configFile: path.resolve(cliDir, 'vite.config.ts'),
+		configFile: path.resolve(cretaRootDir, 'vite.config.ts'),
 	});
 
 	await viteServer.listen();

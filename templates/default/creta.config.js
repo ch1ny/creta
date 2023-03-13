@@ -1,4 +1,4 @@
-const { defineConfig } = require('creta/types');
+const { defineConfig } = require('creta/plugins');
 
 module.exports = defineConfig({
 	updateFilesPath: {
