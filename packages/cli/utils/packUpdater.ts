@@ -27,7 +27,7 @@ async function packUpdaterOnWin32(appOutDir: string, arch: Arch, outDir: string)
 
 	console.log(chalk.bold.blueBright('8. 生成更新文件'));
 	console.log(chalk.blueBright('8.1 复制需要更新的文件'));
-	const { updateFilesPath = {} } = getCretaConfigs();
+	const { updateFilesPath = {} } = await getCretaConfigs();
 
 	const archName = ArchName[arch];
 	let files: string[];
@@ -63,7 +63,7 @@ async function packUpdaterOnDarwin(appOutDir: string, arch: Arch, outDir: string
 	console.log(chalk.bold.blueBright('8. 生成更新文件'));
 	console.log(chalk.blueBright('8.1 复制需要更新的文件'));
 	const dirname = path.resolve(appOutDir, 'Contents');
-	const { updateFilesPath = {} } = getCretaConfigs();
+	const { updateFilesPath = {} } = await getCretaConfigs();
 
 	const archName = ArchName[arch];
 	let files: string[];

@@ -9,10 +9,10 @@ class Constants {
 		return this._gitName;
 	}
 
-	cliDir = path.resolve(__dirname, '..');
-	binDir = path.resolve(this.cliDir, 'bin');
-	libDir = path.join(this.cliDir, 'lib');
-	templatesDir = path.join(this.cliDir, 'templates');
+	cretaRootDir = path.resolve(__dirname, '..');
+	binDir = path.resolve(this.cretaRootDir, 'bin');
+	cliDir = path.join(this.cretaRootDir, 'cli');
+	templatesDir = path.join(this.cretaRootDir, 'templates');
 
 	scriptsCwd = process.cwd();
 }

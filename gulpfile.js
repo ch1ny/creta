@@ -4,21 +4,21 @@ const clean = require('gulp-clean');
 const cp = require('child_process');
 const path = require('path');
 
-const tsCoreProject = ts.createProject('tsconfig.core.json');
+const tsCliProject = ts.createProject('tsconfig.cli.json');
 const tsPlugProject = ts.createProject('tsconfig.plug.json');
 
 gulp.task('clean', function () {
 	return gulp
-		.src(['lib', 'types', 'bin/exe'], { read: false, allowEmpty: true })
-		.pipe(clean(['lib', 'types', 'bin/exe']));
+		.src(['cli', 'plugins', 'bin/exe'], { read: false, allowEmpty: true })
+		.pipe(clean(['cli', 'plugins', 'bin/exe']));
 });
 
-gulp.task('tsc-core', function () {
-	return tsCoreProject.src().pipe(tsCoreProject()).pipe(gulp.dest('lib'));
+gulp.task('tsc-cli', function () {
+	return tsCliProject.src().pipe(tsCliProject()).pipe(gulp.dest('cli'));
 });
 
 gulp.task('tsc-plug', function () {
-	return tsPlugProject.src().pipe(tsPlugProject()).pipe(gulp.dest('types'));
+	return tsPlugProject.src().pipe(tsPlugProject()).pipe(gulp.dest('plugins'));
 });
 
 gulp.task('rust-updater', function () {
@@ -39,7 +39,7 @@ gulp.task(
 	'default',
 	gulp.series(
 		gulp.parallel('clean'),
-		gulp.parallel('tsc-core'),
+		gulp.parallel('tsc-cli'),
 		gulp.parallel('tsc-plug'),
 		gulp.parallel('rust-updater')
 	)

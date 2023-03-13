@@ -2,7 +2,7 @@
 
 const program = require('commander');
 const { resolve } = require('path');
-const commands = require('../lib');
+const commands = require('../cli');
 const { version } = require('../package.json');
 
 process.env.NODE_PATH = resolve(__dirname, '../node_modules/');

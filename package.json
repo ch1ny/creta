@@ -1,8 +1,15 @@
 {
 	"name": "creta",
-	"version": "0.1.4",
+	"version": "0.2.1",
 	"bin": {
 		"creta": "bin/index"
+	},
+	"exports": {
+		"./plugins": {
+			"types": "./plugins/index.d.ts",
+			"import": "./plugins/index.js",
+			"require": "./plugins/index.js"
+		}
 	},
 	"description": "A CLI to build a react+electron+typescript App",
 	"author": "德布罗煜",
@@ -23,6 +30,8 @@
 		"vite": "^4.1.4"
 	},
 	"dependencies": {
+		"@vitejs/plugin-react": "^3.1.0",
+		"@vitejs/plugin-react-swc": "^3.2.0",
 		"chalk": "4",
 		"commander": "^10.0.0",
 		"fs-extra": "^11.1.0",

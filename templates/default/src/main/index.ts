@@ -1,6 +1,5 @@
 import { app, BrowserWindow, ipcMain, screen } from 'electron';
 import path from 'path';
-import url from 'url';
 import * as CONSTANTS from './constants';
 
 const { ARGS, ASAR_ROOT_PATH, IS_PACKAGED, PRELOAD_DIR, screenSize } = CONSTANTS;
@@ -37,14 +36,11 @@ export default async () => {
 		mainWindow.show();
 	});
 	if (IS_PACKAGED) {
-		mainWindow.loadURL(
-			url.format({
-				pathname: path.resolve(ASAR_ROOT_PATH, './renderer/index.html'),
-				protocol: 'file:',
-				slashes: true,
-			})
-		);
+		mainWindow.loadFile(path.resolve(ASAR_ROOT_PATH, './renderer/index.html'));
 	} else {
 		mainWindow.loadURL(`http://127.0.0.1:${ARGS['--port']}/`);
+		mainWindow.once('ready-to-show', () => {
+			mainWindow.webContents.openDevTools();
+		});
 	}
 };
