@@ -3,7 +3,7 @@
 docs/
 
 node_modules/
-packages/
+src/
 
 yarn.lock
 

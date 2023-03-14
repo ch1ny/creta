@@ -1,0 +1,14 @@
+node_modules/
+
+package-lock.json
+yarn.lock
+
+target/
+
+bin/exe/*
+
+cli
+plugins
+
+!src/cli
+!src/plugins

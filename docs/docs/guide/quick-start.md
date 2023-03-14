@@ -4,29 +4,26 @@
 
 ## 新建项目
 
-> 我们推荐您通过 `npx` 使用本脚手架
+> 我们强烈推荐您使用 `yarn` 或 `pnpm` 作为您的包管理工具。
 
-使用 `creta` 创建可以非常方便地创建您的应用，只需要在终端输入如下指令并执行即可:
-
+使用 **NPM**
 ```bash
-npx creta new my-app
+npm create creta "<your-app>"
+```
+
+使用 **YARN**
+```bash
+yarn create creta "<your-app>"
+```
+
+使用 **PNPM**
+```bash
+pnpm create creta "<your-app>"
 ```
 
 ![新建项目](/assets/new-app.webp)
 
 根据提示输入信息，接下来您的目录中便会出现一个名为 `my-app` 的文件夹，其内部就是您的应用源码文件了。
-
-:::tip
-当然，您也可以通过全局安装的方式安装我们的依赖:
-```bash
-npm install -g creta
-# 或
-yarn global add creta
-
-creta new my-app
-```
-但是我们不推荐您进行全局安装，在使用全局安装的脚手架时，部分指令可能并不能达到您需要的效果，因此我们推荐您通过 `npx` 来使用本脚手架。
-:::
 
 ## 认识一下 creta 应用结构
 

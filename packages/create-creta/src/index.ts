@@ -4,7 +4,35 @@ import fs from 'fs';
 import fse from 'fs-extra';
 import inquirer from 'inquirer';
 import path from 'path';
-import constants from '../constants';
+
+/**
+ * copied from [create-vite](https://github.com/vitejs/vite/blob/main/packages/create-vite/src/index.ts)
+ *
+ * @param userAgent
+ * @returns
+ */
+function pkgFromUserAgent(userAgent: string | undefined) {
+	if (!userAgent) return undefined;
+	const pkgSpec = userAgent.split(' ')[0];
+	const pkgSpecArr = pkgSpec.split('/');
+	return {
+		name: pkgSpecArr[0],
+		version: pkgSpecArr[1],
+	};
+}
+
+class Constants {
+	private _gitName?: string;
+	get gitName() {
+		if (this._gitName !== undefined) return this._gitName;
+		this._gitName = cp.execSync('git config --global user.name', { encoding: 'utf8' }).trim();
+		return this._gitName;
+	}
+
+	rootDir = path.resolve(__dirname, '..');
+	templatesDir = path.join(this.rootDir, 'templates');
+}
+const constants = new Constants();
 
 interface IProjectProps {
 	projectName: string;
@@ -15,7 +43,7 @@ interface IProjectProps {
 }
 
 const getProjectProps = async () => {
-	console.log(chalk.bold.blueBright('1. 开始创建项目'));
+	console.log(chalk.bold.blueBright('开始创建项目'));
 	const projectProps: IProjectProps = await inquirer.prompt([
 		{
 			type: 'input',
@@ -99,10 +127,29 @@ const copyTemplate = async (props: IProjectProps, projectDir: string) => {
 		});
 	} catch (e) {}
 
-	console.log(chalk.green('项目初始化完毕，执行下列指令开启编程体验'));
-	console.log(chalk.cyan(`  cd ${projectName}`));
-	console.log(chalk.cyan('  npm install'));
-	console.log(chalk.cyan('  npm run dev'));
+	// 安装依赖
+	const pkgInfo = pkgFromUserAgent(process.env.npm_config_user_agent);
+	const pkgManager = pkgInfo ? pkgInfo.name : 'npm';
+	try {
+		if (pkgManager === 'pnpm') {
+			// pnpm workspace
+			fse.writeFileSync(
+				path.resolve(projectDir, 'pnpm-workspace.yaml'),
+				`packages:\n  - 'src/main'\n  - 'src/preload'\n  - 'src/renderer'`
+			);
+		}
+
+		cp.execSync(`${pkgManager} install`, {
+			cwd: projectDir,
+			stdio: 'inherit',
+		});
+	} catch (e) {
+		return;
+	}
+
+	// cSpell: disable-next-line
+	console.log(chalk.cyan('Ciallo~~ ( ∠·ω< )⌒★'));
+	console.log(chalk.green('creta 应用初始化完毕，期待与您的下一次相遇'));
 };
 
 const validateProjectName = (projectName: string): boolean => {
