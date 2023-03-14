@@ -37,7 +37,7 @@ creta new my-app
 您可以直接在应用根目录下执行：
 
 ```bash
-npm run dev
+yarn dev
 ```
 
 以在开发模式下运行您的程序；
@@ -45,7 +45,7 @@ npm run dev
 也可以执行：
 
 ```bash
-npm run dist
+yarn dist
 ```
 
-将您的应用程序打包成exe。
+将您的应用程序打包成可执行程序。

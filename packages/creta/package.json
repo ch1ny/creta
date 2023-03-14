@@ -1,0 +1,61 @@
+{
+	"name": "creta",
+	"version": "0.2.2",
+	"bin": {
+		"creta": "bin/index"
+	},
+	"exports": {
+		"./plugins": {
+			"types": "./plugins/index.d.ts",
+			"import": "./plugins/index.js",
+			"require": "./plugins/index.js"
+		}
+	},
+	"description": "A CLI to build a react+electron+typescript App",
+	"author": "德布罗煜",
+	"license": "MIT",
+	"scripts": {
+		"prepublishOnly": "gulp"
+	},
+	"devDependencies": {
+		"@types/fs-extra": "^11.0.1",
+		"@types/inquirer": "^9.0.3",
+		"@types/node": "^18.11.18",
+		"electron": "^23.1.1",
+		"electron-builder": "^23.6.0",
+		"gulp": "^4.0.2",
+		"gulp-clean": "^0.4.0",
+		"gulp-typescript": "^6.0.0-alpha.1",
+		"typescript": "^4.9.4",
+		"vite": "^4.1.4"
+	},
+	"dependencies": {
+		"@vitejs/plugin-react": "^3.1.0",
+		"@vitejs/plugin-react-swc": "^3.2.0",
+		"chalk": "4",
+		"commander": "^10.0.0",
+		"create-creta": "latest",
+		"fs-extra": "^11.1.0",
+		"inquirer": "8",
+		"ts-node": "^10.9.1"
+	},
+	"keywords": [
+		"creta",
+		"react",
+		"electron",
+		"typescript",
+		"cli",
+		"template"
+	],
+	"repository": {
+		"type": "git",
+		"url": "https://github.com/ch1ny/creta.git"
+	},
+	"homepage": "https://creta.kira.host/",
+	"bugs": {
+		"url": "https://github.com/ch1ny/creta/issues"
+	},
+	"publishConfig": {
+		"registry": "https://registry.npmjs.org/"
+	}
+}
