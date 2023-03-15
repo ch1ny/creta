@@ -78,6 +78,7 @@ export default async (targets: TPlatform[]) => {
 			asar: true,
 			asarUnpack: '**/*.{node,dll}',
 			files: [outDir],
+			includeSubNodeModules: true,
 			compression: 'maximum',
 			nsis: {
 				oneClick: false,
