@@ -11,7 +11,7 @@
 			"require": "./plugins/index.js"
 		}
 	},
-	"description": "A CLI to build a react+electron+typescript App",
+	"description": "Scaffolding to build a react+electron+typescript App",
 	"author": "德布罗煜",
 	"license": "MIT",
 	"scripts": {
