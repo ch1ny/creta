@@ -19,16 +19,21 @@
 
 ### 使用脚手架创建项目 - Create your project with CRETA
 
-我们建议用户直接通过 `npx` 来省略安装 CLI 的过程，直接创建您的应用：
+> 我们强烈推荐您使用 `yarn` 或 `pnpm` 作为您的包管理工具。
+
+使用 **NPM**
 ```bash
-npx creta new my-app
+npm create creta "<your-app>"
 ```
 
-当然，您也可以将该脚手架作为全局依赖进行安装：
-
+使用 **YARN**
 ```bash
-npm install creta -g
-creta new my-app
+yarn create creta "<your-app>"
+```
+
+使用 **PNPM**
+```bash
+pnpm create creta "<your-app>"
 ```
 
 ### 开发项目 - Develop your app

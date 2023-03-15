@@ -31,7 +31,7 @@ const links: { url: string; lastmod?: number }[] = [];
 
 export default defineConfig({
 	title: 'creta',
-	description: 'A CLI to create a react+electron+typescript App.',
+	description: 'Scaffolding to create a react+electron+typescript App.',
 	appearance: true, // 允许用户切换深色模式
 	outDir: '../dist',
 	cacheDir: '../cache',

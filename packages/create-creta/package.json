@@ -1,11 +1,11 @@
 {
 	"name": "create-creta",
-	"version": "0.2.0",
+	"version": "0.3.0",
 	"bin": {
 		"create-creta": "bin"
 	},
 	"main": "dist/index.js",
-	"description": "A CLI to create a react+electron+typescript App",
+	"description": "Scaffolding to create a react+electron+typescript App",
 	"author": "德布罗煜",
 	"license": "MIT",
 	"scripts": {

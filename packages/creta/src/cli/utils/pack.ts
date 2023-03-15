@@ -39,6 +39,7 @@ function resolveFunction<T>(executor: T | string, name: string): T {
 type TPlatform = 'win32' | 'darwin' | 'linux';
 export default async (targets: TPlatform[]) => {
 	const {
+		outDir = 'build',
 		electronBuilderConfig: { afterPack: userConfigAfterPack, ...electronBuilderConfig } = {},
 		/**
 		 * 自行设计更新方案
@@ -76,7 +77,8 @@ export default async (targets: TPlatform[]) => {
 			copyright: `Copyright © ${new Date().getFullYear()}`,
 			asar: true,
 			asarUnpack: '**/*.{node,dll}',
-			files: ['build'],
+			files: [outDir],
+			includeSubNodeModules: true,
 			compression: 'maximum',
 			nsis: {
 				oneClick: false,

@@ -2,13 +2,14 @@ import chalk from 'chalk';
 import fse from 'fs-extra';
 import path from 'path';
 import constants from '../constants';
-import { buildMain, buildPreload, buildRender } from '../utils';
+import { buildMain, buildPreload, buildRender, getCretaConfigs } from '../utils';
 
 const { scriptsCwd } = constants;
 
 const main = async () => {
-	console.log(chalk.bold.blueBright('1. 清空build目录'));
-	fse.emptyDirSync(path.resolve(scriptsCwd, 'build'));
+	const { outDir = path.resolve(scriptsCwd, 'build') } = await getCretaConfigs();
+	console.log(chalk.bold.blueBright('1. 清空输出目录'));
+	fse.emptyDirSync(outDir);
 
 	console.log(chalk.bold.blueBright('2. 读取package.json数据'));
 

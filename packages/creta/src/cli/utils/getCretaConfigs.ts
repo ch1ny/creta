@@ -83,6 +83,10 @@ interface IConfig {
 	 */
 	useCretaUpdater?: boolean;
 	/**
+	 * 构建产物输出目录
+	 */
+	outDir?: string;
+	/**
 	 * electron-builder 配置项
 	 */
 	electronBuilderConfig?: Configuration;

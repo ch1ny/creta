@@ -83,8 +83,34 @@ const initProjectDirectory = async (projectName: string, projectDir: string) => 
 };
 
 const copyTemplate = async (props: IProjectProps, projectDir: string) => {
+	// 获取模板
+	const templates = (await fs.promises.readdir(constants.templatesDir)).filter((tmp) =>
+		fs.existsSync(path.resolve(constants.templatesDir, tmp, 'creta.template.json'))
+	);
+	const { template } = await inquirer.prompt([
+		{
+			name: 'template',
+			type: 'list',
+			message: '选择一个模板',
+			choices: templates.map((templateDir) => {
+				const { name = templateDir, color = {} } = require(path.resolve(
+					constants.templatesDir,
+					templateDir,
+					'creta.template.json'
+				));
+
+				const coloredName = chalk.rgb(color.r ?? 255, color.g ?? 255, color.b ?? 255)(name);
+
+				return {
+					name: coloredName,
+					value: templateDir,
+				};
+			}),
+		},
+	]);
+
 	// 拷贝模板
-	await fse.copy(path.join(constants.templatesDir, 'default'), projectDir, {
+	await fse.copy(path.join(constants.templatesDir, template), projectDir, {
 		filter: async (filePath) => {
 			const isDirectory = (await fs.promises.lstat(filePath)).isDirectory();
 			if (isDirectory) {
@@ -96,7 +122,7 @@ const copyTemplate = async (props: IProjectProps, projectDir: string) => {
 				)
 					return false;
 			} else {
-				if (filePath.endsWith('.lock')) return false;
+				if (filePath.endsWith('.lock') || filePath.endsWith('creta.template.json')) return false;
 			}
 			return true;
 		},

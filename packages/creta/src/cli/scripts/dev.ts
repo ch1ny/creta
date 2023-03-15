@@ -3,25 +3,22 @@ import { createServer } from 'vite';
 import constants from '../constants';
 import { buildMain, buildPreload, getCretaConfigs, runElectron, tscWatch } from '../utils';
 
-const { cretaRootDir, scriptsCwd } = constants;
-
-const COMMANDS =
-	process.platform === 'win32'
-		? {
-				VITE: 'vite.cmd',
-				ELECTRON: 'electron.cmd',
-		  }
-		: {
-				VITE: 'vite',
-				ELECTRON: 'electron',
-		  };
+const { defaultViteConfig, scriptsCwd } = constants;
 
 const main = async () => {
 	// 1. 启动渲染进程
-	const { electronFastReload = true, viteConfig = {} } = await getCretaConfigs();
+	const {
+		electronFastReload = true,
+		outDir = path.resolve(process.cwd(), 'build'),
+		viteConfig = {},
+	} = await getCretaConfigs();
 	const viteServer = await createServer({
+		...defaultViteConfig,
 		...viteConfig,
-		configFile: path.resolve(cretaRootDir, 'vite.config.ts'),
+		build: {
+			...viteConfig.build,
+			outDir: path.resolve(outDir, 'renderer'),
+		},
 	});
 
 	await viteServer.listen();
