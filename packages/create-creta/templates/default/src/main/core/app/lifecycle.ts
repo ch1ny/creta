@@ -1,4 +1,5 @@
 import { app } from 'electron';
+import appEntry from '../../index';
 import { updateService } from '../services';
 
 const beforeStartApp = async () => {
@@ -12,6 +13,5 @@ export const startApp = async () => {
 		if (process.platform !== 'darwin') app.quit();
 	});
 
-	const { default: appEntry } = await import('../../index');
 	await appEntry();
 };
