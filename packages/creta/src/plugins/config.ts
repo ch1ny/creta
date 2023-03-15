@@ -13,6 +13,10 @@ export interface CretaConfig {
 	 */
 	electronFastReload?: boolean;
 	/**
+	 * 构建产物输出目录
+	 */
+	outDir?: string;
+	/**
 	 * 对应平台下更新包需要打包的文件
 	 */
 	updateFilesPath?: {

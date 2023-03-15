@@ -10,5 +10,5 @@ bin/exe/*
 cli
 plugins
 
-!src/cli
-!src/plugins
+!src/**/cli
+!src/**/plugins

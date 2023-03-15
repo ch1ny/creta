@@ -1,6 +1,6 @@
 {
 	"name": "creta",
-	"version": "0.2.2",
+	"version": "0.3.0",
 	"bin": {
 		"creta": "bin/index"
 	},
@@ -37,7 +37,8 @@
 		"create-creta": "latest",
 		"fs-extra": "^11.1.0",
 		"inquirer": "8",
-		"ts-node": "^10.9.1"
+		"ts-node": "^10.9.1",
+		"vite-electron-plugin": "^0.8.2"
 	},
 	"keywords": [
 		"creta",
