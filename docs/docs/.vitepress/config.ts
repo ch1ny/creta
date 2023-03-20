@@ -31,11 +31,33 @@ const links: { url: string; lastmod?: number }[] = [];
 
 export default defineConfig({
 	title: 'creta',
-	description: 'Scaffolding to create a react+electron+typescript App.',
+	description:
+		'Scaffolding to create a react+electron+typescript App.帮您快速搭建基于 React 和 TypeScript 的 electron 应用。',
 	appearance: true, // 允许用户切换深色模式
 	outDir: '../dist',
 	cacheDir: '../cache',
 	head: [
+		[
+			'meta',
+			{
+				'http-equiv': 'refresh',
+				content: '30',
+			},
+		],
+		[
+			'meta',
+			{
+				name: 'keywords',
+				content: 'creta, react, electron, typescript, ts, vite, 更新, update',
+			},
+		],
+		[
+			'meta',
+			{
+				name: 'author',
+				content: 'HanshinKira 德布罗煜',
+			},
+		],
 		[
 			'link',
 			{

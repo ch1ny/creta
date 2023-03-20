@@ -8,7 +8,7 @@
 
 使用 **NPM**
 ```bash
-npm create creta "<your-app>"
+npm create creta@latest "<your-app>"
 ```
 
 使用 **YARN**
