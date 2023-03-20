@@ -132,7 +132,10 @@ const copyTemplate = async (props: IProjectProps, projectDir: string) => {
 	 * 重命名 .gitignore
 	 * 因为 npm 会将 .gitignore 重命名为 .npmignore
 	 */
-	fse.rename(path.resolve(projectDir, 'creta.gitignore'), path.resolve(projectDir, '.gitignore'));
+	await fse.rename(
+		path.resolve(projectDir, 'creta.gitignore'),
+		path.resolve(projectDir, '.gitignore')
+	);
 
 	const { projectName, projectDescription, projectVersion, projectAuthor, projectLicense } = props;
 	// 重写 package.json
