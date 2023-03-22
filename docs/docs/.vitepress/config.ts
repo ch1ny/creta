@@ -40,13 +40,6 @@ export default defineConfig({
 		[
 			'meta',
 			{
-				'http-equiv': 'refresh',
-				content: '30',
-			},
-		],
-		[
-			'meta',
-			{
 				name: 'keywords',
 				content: 'creta, react, electron, typescript, ts, vite, 更新, update',
 			},

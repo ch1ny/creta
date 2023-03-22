@@ -50,7 +50,7 @@ async function packUpdaterOnWin32(appOutDir: string, arch: Arch, outDir: string)
 	console.log(chalk.blueBright('8.2 制作更新包'));
 	const eupName = `update-win32-${archName}.eup`;
 	cp.execSync(`creta eup update ${path.resolve(outDir, eupName)}`, { cwd: scriptsCwd });
-	cp.execSync(`rm -rf ${path.resolve(scriptsCwd, 'update')}`);
+	await fse.remove(path.resolve(scriptsCwd, 'update'));
 }
 
 async function packUpdaterOnDarwin(appOutDir: string, arch: Arch, outDir: string) {
