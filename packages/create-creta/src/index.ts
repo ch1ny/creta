@@ -25,8 +25,12 @@ class Constants {
 	private _gitName?: string;
 	get gitName() {
 		if (this._gitName !== undefined) return this._gitName;
-		this._gitName = cp.execSync('git config --global user.name', { encoding: 'utf8' }).trim();
-		return this._gitName;
+		try {
+			this._gitName = cp.execSync('git config --global user.name', { encoding: 'utf8' }).trim();
+			return this._gitName;
+		} catch (ex) {
+			return 'author';
+		}
 	}
 
 	rootDir = path.resolve(__dirname, '..');
