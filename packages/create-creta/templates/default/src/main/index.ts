@@ -1,8 +1,8 @@
 import { app, BrowserWindow, ipcMain, screen } from 'electron';
-import path from 'path';
 import * as CONSTANTS from './constants';
+import MainWindow from './windows/MainWindow';
 
-const { ARGS, ASAR_ROOT_PATH, IS_PACKAGED, PRELOAD_DIR, screenSize } = CONSTANTS;
+const { screenSize } = CONSTANTS;
 
 /**
  * 应用主进程入口
@@ -19,28 +19,25 @@ export default async () => {
 	screenSize.width = screenWidth;
 	screenSize.height = screenHeight;
 
-	// 创建主窗口
-	const mainWindow = new BrowserWindow({
-		width: parseInt(`${screenWidth * 0.7}`),
-		height: parseInt(`${screenHeight * 0.8}`),
-		frame: false,
-		transparent: true,
-		show: false,
-		webPreferences: {
-			devTools: !IS_PACKAGED,
-			preload: path.join(PRELOAD_DIR, 'preload.js'),
-			webSecurity: false,
-		},
+	// 窗口按钮事件
+	ipcMain.on('DRAG_BAR.BUTTONS_ONCLICK', (ev, button: number) => {
+		const targetWindow = BrowserWindow.fromWebContents(ev.sender);
+		if (!targetWindow) return;
+
+		switch (button) {
+			case -1: // 隐藏窗口
+				targetWindow.hide();
+				break;
+			case 0: // 窗口最小化
+				targetWindow.minimize();
+				break;
+			case 1: // 最大化 / 还原窗口
+				targetWindow.isMaximized() ? targetWindow.unmaximize() : targetWindow.maximize();
+				break;
+			default:
+			// no-op
+		}
 	});
-	mainWindow.on('ready-to-show', () => {
-		mainWindow.show();
-	});
-	if (IS_PACKAGED) {
-		mainWindow.loadFile(path.resolve(ASAR_ROOT_PATH, './renderer/index.html'));
-	} else {
-		mainWindow.loadURL(`http://127.0.0.1:${ARGS['--port']}/`);
-		mainWindow.once('ready-to-show', () => {
-			mainWindow.webContents.openDevTools();
-		});
-	}
+
+	MainWindow.createWindow();
 };
