@@ -1,0 +1,33 @@
+.dragBar {
+	-webkit-app-region: drag;
+	position: relative;
+	height: 2rem;
+	width: 100%;
+	user-select: none;
+	z-index: 999;
+	display: flex;
+	background-image: linear-gradient(120deg, #c2e9fb 0%, #a1c4fd 100%);
+
+	.rightButtonWrapper {
+		-webkit-app-region: none;
+		display: flex;
+		margin-left: auto;
+		right: 0;
+
+		.rightButton {
+			font-size: 1.25rem;
+			width: 2rem;
+			height: 2rem;
+			display: flex;
+			justify-content: center;
+			align-items: center;
+			color: #25272a;
+			cursor: pointer;
+			transition: all 0.2s ease;
+
+			&:hover {
+				background-color: rgba(255, 255, 255, 0.7);
+			}
+		}
+	}
+}

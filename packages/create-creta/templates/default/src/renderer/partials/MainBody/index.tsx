@@ -1,5 +1,5 @@
+import { CretaLogo } from '@/components/icon';
 import React, { useEffect, useState } from 'react';
-import { CretaLogo } from '../CretaLogo';
 import styles from './index.module.less';
 
 const iArr = new Array(5).fill(undefined);
