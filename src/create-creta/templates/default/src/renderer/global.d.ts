@@ -19,7 +19,7 @@ declare global {
 	declare module '*.gif';
 
 	declare interface Window {
-		ipc: {
+		ipcRenderer: {
 			on: (channel: string, cb: (evt: IpcRendererEvent, ...args: any[]) => any) => void;
 			once: (channel: string, cb: (evt: IpcRendererEvent, ...args: any[]) => any) => void;
 			removeListener: (channel: string, cb: (...args: any[]) => any) => void;
