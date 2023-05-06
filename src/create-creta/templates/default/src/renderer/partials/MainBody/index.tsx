@@ -8,7 +8,7 @@ export const MainBody: React.FC = () => {
 	const [version, setVersion] = useState('');
 
 	useEffect(() => {
-		window.ipc.invoke('APP.VERSION').then((value) => {
+		window.ipcRenderer.invoke('APP.VERSION').then((value) => {
 			setVersion(value);
 		});
 	}, []);

@@ -11,12 +11,6 @@ program.version(version, '-v, --version');
 
 program.usage('<command>');
 
-program
-	.command('new <project-name>')
-	.description('Create a React+Electron+TypeScript project.')
-	.alias('n')
-	.action(commands.create);
-
 program.command('dev').description('Run your app in dev mode.').action(commands.dev);
 
 program
