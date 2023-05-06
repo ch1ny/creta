@@ -179,6 +179,23 @@ const copyTemplate = async (props: IProjectProps, projectDir: string) => {
 		return;
 	}
 
+	// 安装 creta 至 DevDependency
+	try {
+		if (pkgManager === 'npm') {
+			cp.execSync('npm install --save-dev creta', {
+				cwd: projectDir,
+				stdio: 'inherit',
+			});
+		} else {
+			cp.execSync(`${pkgManager} add creta -D`, {
+				cwd: projectDir,
+				stdio: 'inherit',
+			});
+		}
+	} catch (e) {
+		console.log(chalk.red('× `creta` 安装失败，请手动添加至 devDependencies'));
+	}
+
 	// cSpell: disable-next-line
 	console.log(chalk.cyan('Ciallo~~ ( ∠·ω< )⌒★'));
 	console.log(chalk.green('creta 应用初始化完毕，期待与您的下一次相遇'));
