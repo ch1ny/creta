@@ -1,6 +1,6 @@
 {
 	"name": "creta",
-	"version": "0.3.1",
+	"version": "0.4.0",
 	"bin": {
 		"creta": "bin/index"
 	},
@@ -34,7 +34,6 @@
 		"@vitejs/plugin-react-swc": "^3.2.0",
 		"chalk": "4",
 		"commander": "^10.0.0",
-		"create-creta": "latest",
 		"fs-extra": "^11.1.0",
 		"inquirer": "8",
 		"ts-node": "^10.9.1",
