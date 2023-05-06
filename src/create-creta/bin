@@ -1,7 +1,2 @@
 #!/usr/bin/env node
-const main = require('./dist/index.js').default;
-
-const defaultTargetDir = 'creta-app';
-const targetDir = process.argv.slice(2).join(' ');
-
-main(targetDir ?? defaultTargetDir);
+require('./dist/index.js').default();

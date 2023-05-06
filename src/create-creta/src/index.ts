@@ -47,7 +47,6 @@ interface IProjectProps {
 }
 
 const getProjectProps = async () => {
-	console.log(chalk.bold.blueBright('开始创建项目'));
 	const projectProps: IProjectProps = await inquirer.prompt([
 		{
 			type: 'input',
@@ -201,7 +200,17 @@ const validateProjectName = (projectName: string): boolean => {
 	return true;
 };
 
-export default async (projectName: string) => {
+export default async () => {
+	console.log(chalk.bold.blueBright('开始创建项目'));
+	const { projectName }: { projectName: string } = await inquirer.prompt([
+		{
+			type: 'input',
+			name: 'projectName',
+			message: '项目名称',
+			default: 'creta-app',
+		},
+	]);
+
 	if (!validateProjectName(projectName)) return;
 
 	// 目标根路径，process.cwd()为脚手架工作时的路径，将其与用户输入的项目名称拼接起来作为目标路径
