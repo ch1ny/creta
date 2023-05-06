@@ -3,7 +3,7 @@
 	"version": "0.0.0",
 	"private": true,
 	"workspaces": [
-		"packages/create-creta",
-		"packages/creta"
+		"src/create-creta",
+		"src/creta"
 	]
 }
