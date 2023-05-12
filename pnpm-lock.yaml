@@ -65,6 +65,12 @@ importers:
       commander:
         specifier: ^10.0.0
         version: 10.0.0
+      debug:
+        specifier: ^4.3.4
+        version: 4.3.4
+      esbuild:
+        specifier: ^0.17.18
+        version: 0.17.18
       fs-extra:
         specifier: ^11.1.0
         version: 11.1.0
@@ -78,6 +84,9 @@ importers:
         specifier: ^0.8.2
         version: 0.8.2(esbuild@0.17.18)
     devDependencies:
+      '@types/debug':
+        specifier: ^4.1.7
+        version: 4.1.7
       '@types/fs-extra':
         specifier: ^11.0.1
         version: 11.0.1
