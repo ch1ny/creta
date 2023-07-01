@@ -2,6 +2,7 @@ import cp from 'child_process';
 import path from 'path';
 import { build } from 'vite';
 import electron from 'vite-electron-plugin';
+import nodecPlugin from './nodec/plugin';
 import constants from '../constants';
 import { getCretaConfigs } from './getCretaConfigs';
 
@@ -32,7 +33,7 @@ export const buildPreload = async () =>
 export const buildMain = async () => {
 	const { outDir = path.resolve(scriptsCwd, 'build'), viteConfig = {} } = await getCretaConfigs();
 
-	return build({
+	const buildResult = await build({
 		root: cretaRootDir,
 		plugins: [
 			electron({
@@ -42,9 +43,20 @@ export const buildMain = async () => {
 					info: () => undefined,
 				},
 			}),
+			nodecPlugin({
+				requirePath: path.resolve(outDir, 'main', 'nodec.js'),
+				includes: [path.resolve(outDir, 'main')],
+			}),
 		],
 		build: {
 			write: false,
 		},
 	});
+
+	// await nodec({
+	// 	requirePath: path.resolve(outDir, 'main', 'nodec.js'),
+	// 	includes: [path.resolve(outDir, 'main')],
+	// });
+
+	return buildResult;
 };

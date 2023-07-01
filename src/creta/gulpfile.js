@@ -41,6 +41,6 @@ gulp.task(
 		gulp.parallel('clean'),
 		gulp.parallel('tsc-cli'),
 		gulp.parallel('tsc-plug'),
-		gulp.parallel('rust-updater')
+		// gulp.parallel('rust-updater')
 	)
 );
