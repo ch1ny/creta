@@ -186,6 +186,11 @@ const copyTemplate = async (props: IProjectProps, projectDir: string) => {
 				cwd: projectDir,
 				stdio: 'inherit',
 			});
+		} else if (pkgManager === 'pnpm') {
+			cp.execSync(`${pkgManager} add creta -D -w`, {
+				cwd: projectDir,
+				stdio: 'inherit',
+			});
 		} else {
 			cp.execSync(`${pkgManager} add creta -D`, {
 				cwd: projectDir,
