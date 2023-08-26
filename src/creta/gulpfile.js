@@ -21,18 +21,34 @@ gulp.task('tsc-plug', function () {
 	return tsPlugProject.src().pipe(tsPlugProject()).pipe(gulp.dest('plugins'));
 });
 
-gulp.task('rust-updater', function () {
+gulp.task('rust-updater-darwin', function () {
 	cp.execSync('cargo build --release', {
 		cwd: path.resolve(__dirname, 'creta-updater'),
 	});
 	const outDir = path.resolve(__dirname, 'bin', 'exe');
 	const updaterDir = path.resolve(__dirname, 'creta-updater');
+
 	return gulp
 		.src([
-			path.resolve(updaterDir, 'target', 'release', 'eup.exe'),
-			path.resolve(updaterDir, 'target', 'release', 'updater.exe'),
+			path.resolve(updaterDir, 'target', 'release', 'eup'),
+			path.resolve(updaterDir, 'target', 'release', 'updater'),
 		])
-		.pipe(gulp.dest(outDir));
+		.pipe(gulp.dest(path.resolve(outDir, 'darwin')));
+});
+
+gulp.task('rust-updater-windows', function () {
+	cp.execSync('cargo build --release --target x86_64-pc-windows-gnu', {
+		cwd: path.resolve(__dirname, 'creta-updater'),
+	});
+	const outDir = path.resolve(__dirname, 'bin', 'exe');
+	const updaterDir = path.resolve(__dirname, 'creta-updater');
+
+	return gulp
+		.src([
+			path.resolve(updaterDir, 'target', 'x86_64-pc-windows-gnu', 'release', 'eup.exe'),
+			path.resolve(updaterDir, 'target', 'x86_64-pc-windows-gnu', 'release', 'updater.exe'),
+		])
+		.pipe(gulp.dest(path.resolve(outDir, 'win32')));
 });
 
 gulp.task(
@@ -41,6 +57,7 @@ gulp.task(
 		gulp.parallel('clean'),
 		gulp.parallel('tsc-cli'),
 		gulp.parallel('tsc-plug'),
-		gulp.parallel('rust-updater')
+		gulp.parallel('rust-updater-darwin'),
+		gulp.parallel('rust-updater-windows')
 	)
 );

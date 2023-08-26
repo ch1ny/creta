@@ -5,7 +5,12 @@ import constants from '../constants';
 const { binDir } = constants;
 
 export default async (sourcePath: string, targetPath: string) => {
-	const eup = path.join(binDir, 'exe', process.platform === 'win32' ? 'eup.exe' : 'eup');
+	const eup = path.resolve(
+		binDir,
+		'exe',
+		process.platform,
+		process.platform === 'win32' ? 'eup.exe' : 'eup'
+	);
 
 	cp.execSync(
 		`${eup} compress -i ${sourcePath} -o ${
