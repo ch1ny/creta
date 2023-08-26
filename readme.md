@@ -6,7 +6,7 @@
   <img src="https://assets.kira.host/image/creta_logo_colored.svg" alt="LOGO" width="150" />
 </div>
 
-## 介绍 - Introduce
+## 介绍 - Introduction
 
 **creta** 全称 `create react-electron-typescript app`，是一款为了协助前端程序员快速搭建 **React + TypeScript** 的 **Electron** 应用的脚手架。
 
