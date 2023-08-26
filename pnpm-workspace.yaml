@@ -1,0 +1,4 @@
+packages:
+  - 'src/create-creta'
+  - 'src/creta'
+  - 'docs'

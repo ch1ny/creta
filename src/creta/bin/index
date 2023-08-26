@@ -1,0 +1,37 @@
+#!/usr/bin/env node
+
+const program = require('commander');
+const { resolve } = require('path');
+const commands = require('../cli');
+const { version } = require('../package.json');
+
+process.env.NODE_PATH = resolve(__dirname, '../node_modules/');
+
+program.version(version, '-v, --version');
+
+program.usage('<command>');
+
+program.command('dev').description('Run your app in dev mode.').action(commands.dev);
+
+program
+	.command('build')
+	.description('Build your app source code.')
+	.alias('b')
+	.action(commands.build);
+
+program
+	.command('dist')
+	.description('Build your app source code and pack it.')
+	.alias('d')
+	.action(commands.dist);
+
+program
+	.command('eup <source> <target>')
+	.description('Make electron update package with EUP.')
+	.action(commands.eup);
+
+program.parse(process.argv);
+
+if (!program.args.length) {
+	program.help();
+}

@@ -1,0 +1,47 @@
+{
+	"name": "create-creta",
+	"version": "0.4.3",
+	"bin": {
+		"create-creta": "bin"
+	},
+	"main": "dist/index.js",
+	"description": "Scaffolding to create a react+electron+typescript App",
+	"author": "德布罗煜",
+	"license": "MIT",
+	"scripts": {
+		"prepublishOnly": "gulp"
+	},
+	"keywords": [
+		"creta",
+		"react",
+		"electron",
+		"typescript",
+		"cli",
+		"template"
+	],
+	"repository": {
+		"type": "git",
+		"url": "https://github.com/ch1ny/creta.git"
+	},
+	"homepage": "https://creta.kira.host/",
+	"bugs": {
+		"url": "https://github.com/ch1ny/creta/issues"
+	},
+	"publishConfig": {
+		"registry": "https://registry.npmjs.org/"
+	},
+	"devDependencies": {
+		"@types/fs-extra": "^11.0.1",
+		"@types/inquirer": "^9.0.3",
+		"@types/node": "^18.15.2",
+		"gulp": "^4.0.2",
+		"gulp-clean": "^0.4.0",
+		"gulp-typescript": "^6.0.0-alpha.1",
+		"typescript": "^4.9.5"
+	},
+	"dependencies": {
+		"chalk": "4",
+		"fs-extra": "^11.1.0",
+		"inquirer": "8"
+	}
+}
