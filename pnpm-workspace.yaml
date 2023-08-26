@@ -1,4 +1,4 @@
 packages:
-  - 'src/create-creta'
+  - 'src/cli'
   - 'src/creta'
   - 'docs'

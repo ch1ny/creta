@@ -28,6 +28,40 @@ importers:
         specifier: ^3.2.47
         version: 3.2.47
 
+  src/cli:
+    dependencies:
+      chalk:
+        specifier: '4'
+        version: 4.0.0
+      fs-extra:
+        specifier: ^11.1.0
+        version: 11.1.0
+      inquirer:
+        specifier: '8'
+        version: 8.0.0
+    devDependencies:
+      '@types/fs-extra':
+        specifier: ^11.0.1
+        version: 11.0.1
+      '@types/inquirer':
+        specifier: ^9.0.3
+        version: 9.0.3
+      '@types/node':
+        specifier: ^18.15.2
+        version: 18.15.2
+      gulp:
+        specifier: ^4.0.2
+        version: 4.0.2
+      gulp-clean:
+        specifier: ^0.4.0
+        version: 0.4.0
+      gulp-typescript:
+        specifier: ^6.0.0-alpha.1
+        version: 6.0.0-alpha.1(typescript@4.9.5)
+      typescript:
+        specifier: ^4.9.5
+        version: 4.9.5
+
   src/creta:
     dependencies:
       '@vitejs/plugin-react':
@@ -1224,7 +1258,7 @@ packages:
     resolution: {integrity: sha512-ULqvZNGMv0zRFvqn8/4LSPtnmN4MfhlPNtJCTpKuIIxGVGZ2rYWzFXrvEBoh9CVyqSE7D6YFRJ1hydLHI6kbWw==}
     requiresBuild: true
     dependencies:
-      '@types/node': 20.5.6
+      '@types/node': 18.15.2
       xmlbuilder: 15.1.1
     dev: true
     optional: true
