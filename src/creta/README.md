@@ -23,17 +23,17 @@
 
 使用 **NPM**
 ```bash
-npm create creta@latest "<your-app>"
+npm create creta@latest
 ```
 
 使用 **YARN**
 ```bash
-yarn create creta "<your-app>"
+yarn create creta
 ```
 
 使用 **PNPM**
 ```bash
-pnpm create creta "<your-app>"
+pnpm create creta
 ```
 
 ### 开发项目 - Develop your app
@@ -42,7 +42,7 @@ pnpm create creta "<your-app>"
 您可以直接在应用根目录下执行：
 
 ```bash
-yarn dev
+pnpm dev
 ```
 
 以在开发模式下运行您的程序；
@@ -50,7 +50,7 @@ yarn dev
 也可以执行：
 
 ```bash
-yarn dist
+pnpm dist
 ```
 
 将您的应用程序打包成可执行程序。

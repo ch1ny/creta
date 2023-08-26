@@ -18,7 +18,12 @@ enum Arch {
 }
 const ArchName = ['ia32', 'x64', 'armv7l', 'arm64', 'universal'];
 
-async function packUpdaterOnWin32(appOutDir: string, arch: Arch, outDir: string) {
+async function packUpdaterOnWin32(
+	appOutDir: string,
+	arch: Arch,
+	outDir: string,
+	appVersion: string
+) {
 	console.log(chalk.bold.blueBright('7. 复制更新器'));
 	await fse.copyFile(
 		path.resolve(binDir, 'exe', 'win32', 'updater.exe'),
@@ -37,23 +42,66 @@ async function packUpdaterOnWin32(appOutDir: string, arch: Arch, outDir: string)
 		files = updateFilesPath['win32'] || [];
 	}
 
-	await Promise.all(
-		files.map((file) => fse.ensureDir(path.dirname(path.resolve(scriptsCwd, 'update', file))))
+	files = Array.from(
+		new Set(
+			files.concat([
+				// 默认需要打包的文件
+				'resources/app.asar',
+			])
+		)
 	);
+
+	const unpackedUpdateDir = path.resolve(constants.cretaRootDir, 'update');
+	await fse.remove(unpackedUpdateDir).catch(() => -1);
 
 	await Promise.all(
 		files.map((file) =>
-			fse.copyFile(path.resolve(appOutDir, file), path.resolve(scriptsCwd, 'update', file))
+			fse
+				.ensureFile(path.resolve(appOutDir, file))
+				.then(() =>
+					fse
+						.ensureDir(path.dirname(path.resolve(unpackedUpdateDir, file)))
+						.then(() =>
+							fse.copyFile(path.resolve(appOutDir, file), path.resolve(unpackedUpdateDir, file))
+						)
+						.catch((error) => {
+							// 目标目录创建失败
+							console.log(
+								chalk.yellow.bold('[WARN]'),
+								chalk.yellow(
+									`Can't create directory named "${path.dirname(
+										path.resolve(unpackedUpdateDir, file)
+									)}" 'cause:`
+								)
+							);
+							console.log(error);
+						})
+				)
+				.catch(() => {
+					// 待拷贝的文件不存在
+					console.log(
+						chalk.yellow.bold('[WARN]'),
+						chalk.yellow(
+							`File "${path.resolve(appOutDir, file)}" won't be copied 'cause it doesn't exist.`
+						)
+					);
+				})
 		)
 	);
 
 	console.log(chalk.blueBright('8.2 制作更新包'));
-	const eupName = `update-win32-${archName}.eup`;
+	const eupName = `update-win32-${archName}-v${appVersion}.eup`;
 	cp.execSync(`creta eup update ${path.resolve(outDir, eupName)}`, { cwd: scriptsCwd });
-	await fse.remove(path.resolve(scriptsCwd, 'update'));
+	await fse.remove(unpackedUpdateDir).catch(() => -1);
 }
 
-async function packUpdaterOnDarwin(appOutDir: string, arch: Arch, outDir: string) {
+async function packUpdaterOnDarwin(
+	appOutDir: string,
+	arch: Arch,
+	outDir: string,
+	appVersion: string,
+	productFilename: string
+) {
 	console.log(chalk.bold.blueBright('7. 复制更新器'));
 	await fse.copyFile(
 		path.resolve(binDir, 'exe', 'darwin', 'updater'),
@@ -73,20 +121,63 @@ async function packUpdaterOnDarwin(appOutDir: string, arch: Arch, outDir: string
 		files = updateFilesPath['darwin'] || [];
 	}
 
-	await Promise.all(
-		files.map((file) => fse.ensureDir(path.dirname(path.resolve(scriptsCwd, 'update', file))))
+	files = Array.from(
+		new Set(
+			files.concat([
+				// 默认需要打包的文件
+				`Frameworks/${productFilename} Helper (GPU).app/Contents/info.plist`,
+				`Frameworks/${productFilename} Helper (Plugin).app/Contents/Info.plist`,
+				`Frameworks/${productFilename} Helper (Renderer).app/Contents/Info.plist`,
+				`Frameworks/${productFilename} Helper.app/Contents/Info.plist`,
+				'Info.plist', // 右键显示简介版本号
+				'Resources/app.asar', // 应用资源
+				'Resources/electron.icns', // 图标文件
+			])
+		)
 	);
+
+	const unpackedUpdateDir = path.resolve(constants.cretaRootDir, 'update');
+	await fse.remove(unpackedUpdateDir).catch(() => -1);
 
 	await Promise.all(
 		files.map((file) =>
-			fse.copyFile(path.resolve(dirname, file), path.resolve(scriptsCwd, 'update', file))
+			fse
+				.ensureFile(path.resolve(appOutDir, file))
+				.then(() =>
+					fse
+						.ensureDir(path.dirname(path.resolve(unpackedUpdateDir, file)))
+						.then(() =>
+							fse.copyFile(path.resolve(dirname, file), path.resolve(unpackedUpdateDir, file))
+						)
+						.catch((error) => {
+							// 目标目录创建失败
+							console.log(
+								chalk.yellow.bold('[WARN]'),
+								chalk.yellow(
+									`Can't create directory named "${path.dirname(
+										path.resolve(unpackedUpdateDir, file)
+									)}" 'cause:`
+								)
+							);
+							console.log(error);
+						})
+				)
+				.catch(() => {
+					// 待拷贝的文件不存在
+					console.log(
+						chalk.yellow.bold('[WARN]'),
+						chalk.yellow(
+							`File "${path.resolve(appOutDir, file)}" won't be copied 'cause it doesn't exist.`
+						)
+					);
+				})
 		)
 	);
 
 	console.log(chalk.blueBright('8.2 制作更新包'));
-	const eupName = `update-darwin-${archName}.eup`;
+	const eupName = `update-darwin-${archName}-v${appVersion}.eup`;
 	cp.execSync(`creta eup update ${path.resolve(outDir, eupName)}`, { cwd: scriptsCwd });
-	cp.execSync(`rm -rf ${path.resolve(scriptsCwd, 'update')}`);
+	await fse.remove(unpackedUpdateDir).catch(() => -1);
 }
 
 export const packUpdater = async (context: PackContext) => {
@@ -97,17 +188,19 @@ export const packUpdater = async (context: PackContext) => {
 			await packUpdaterOnDarwin(
 				path.resolve(appOutDir, `${packager.appInfo.productFilename}.app`),
 				arch,
-				outDir
+				outDir,
+				packager.appInfo.version,
+				packager.appInfo.productFilename
 			);
 			break;
 		case 'win32':
-			await packUpdaterOnWin32(appOutDir, arch, outDir);
+			await packUpdaterOnWin32(appOutDir, arch, outDir, packager.appInfo.version);
 			break;
 		default:
 			// no-op;
 			console.log(
 				chalk.yellow('[WARN]'),
-				'暂不支持',
+				'轻量更新器暂不支持',
 				chalk.magenta(`'${electronPlatformName}'`),
 				'平台'
 			);

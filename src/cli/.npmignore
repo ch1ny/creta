@@ -1,0 +1,10 @@
+node_modules/
+src/
+
+yarn.lock
+
+gulpfile.js
+
+tsconfig.json
+!templates/**/src/**/tsconfig.*json
+
