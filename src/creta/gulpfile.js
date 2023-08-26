@@ -22,9 +22,6 @@ gulp.task('tsc-plug', function () {
 });
 
 gulp.task('rust-updater-darwin', function () {
-	cp.execSync('cargo build --release', {
-		cwd: path.resolve(__dirname, 'creta-updater'),
-	});
 	const outDir = path.resolve(__dirname, 'bin', 'exe');
 	const updaterDir = path.resolve(__dirname, 'creta-updater');
 
@@ -37,9 +34,6 @@ gulp.task('rust-updater-darwin', function () {
 });
 
 gulp.task('rust-updater-windows', function () {
-	cp.execSync('cargo build --release --target x86_64-pc-windows-gnu', {
-		cwd: path.resolve(__dirname, 'creta-updater'),
-	});
 	const outDir = path.resolve(__dirname, 'bin', 'exe');
 	const updaterDir = path.resolve(__dirname, 'creta-updater');
 

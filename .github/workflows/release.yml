@@ -43,20 +43,25 @@ jobs:
       - name: Update version number
         run: |
           node scripts/version.js ${{ steps.get_version.outputs.VERSION }}
-      - name: Publish create-creta
-        run: |
-          cd src/cli
-          npm publish
-          cd ../..
-        env:
-          NODE_AUTH_TOKEN: ${{secrets.NPM_TOKEN}}
       - name: PrePublish creta -- Install Mingw-W64 dependencies
         run: |
           rustup target add x86_64-pc-windows-gnu
           brew install mingw-w64
+      - name: PrePublish creta -- Compile Creta Updater
+        run: |
+          cd src/creta/creta-updater
+          cargo build --release
+          cargo build --release --target x86_64-pc-windows-gnu
       - name: Publish creta
         run: |
           cd src/creta
+          npm publish
+          cd ../..
+        env:
+          NODE_AUTH_TOKEN: ${{secrets.NPM_TOKEN}}
+      - name: Publish create-creta
+        run: |
+          cd src/cli
           npm publish
           cd ../..
         env:
@@ -69,4 +74,4 @@ jobs:
           draft: false
           prerelease: false
         env:
-          GITHUB_REPOSITORY: ch1ny/github-actions-test
+          GITHUB_REPOSITORY: ch1ny/creta
