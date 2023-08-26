@@ -4,11 +4,11 @@ import path from 'path';
 import { EXE_DIR } from '../../../constants';
 import { IUpdateService } from './interface';
 
-const ContentsParentDir = path.resolve(EXE_DIR, '../..');
+const ContentsDir = path.dirname(EXE_DIR);
 
 class Darwin implements IUpdateService {
 	async beforeStartCheck() {
-		if (!fs.existsSync(path.join(ContentsParentDir, 'update.eup'))) return;
+		if (!fs.existsSync(path.join(ContentsDir, 'update.eup'))) return;
 
 		// 阻塞
 		await new Promise(() => {
@@ -19,11 +19,11 @@ class Darwin implements IUpdateService {
 	async exeUpdater() {
 		const { spawn } = cp;
 		const child = spawn(
-			path.join(ContentsParentDir, 'updater'),
-			['-p', `${process.pid}`, '-e', path.dirname(path.join(EXE_DIR, '..'))],
+			path.join(ContentsDir, 'updater'),
+			['-p', `${process.pid}`, '-e', path.dirname(ContentsDir)],
 			{
 				detached: true,
-				cwd: ContentsParentDir,
+				cwd: ContentsDir,
 			}
 		);
 		child.unref();

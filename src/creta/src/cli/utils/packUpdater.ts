@@ -21,7 +21,7 @@ const ArchName = ['ia32', 'x64', 'armv7l', 'arm64', 'universal'];
 async function packUpdaterOnWin32(appOutDir: string, arch: Arch, outDir: string) {
 	console.log(chalk.bold.blueBright('7. 复制更新器'));
 	await fse.copyFile(
-		path.resolve(binDir, 'exe', 'updater.exe'),
+		path.resolve(binDir, 'exe', 'win32', 'updater.exe'),
 		path.resolve(appOutDir, 'updater.exe')
 	);
 
@@ -56,8 +56,8 @@ async function packUpdaterOnWin32(appOutDir: string, arch: Arch, outDir: string)
 async function packUpdaterOnDarwin(appOutDir: string, arch: Arch, outDir: string) {
 	console.log(chalk.bold.blueBright('7. 复制更新器'));
 	await fse.copyFile(
-		path.resolve(binDir, 'exe', 'updater'),
-		path.resolve(appOutDir, 'updater') // TODO: 需要验证 appOutDir 是以 `*.app` 结尾
+		path.resolve(binDir, 'exe', 'darwin', 'updater'),
+		path.resolve(appOutDir, 'Contents', 'updater')
 	);
 
 	console.log(chalk.bold.blueBright('8. 生成更新文件'));
@@ -90,11 +90,15 @@ async function packUpdaterOnDarwin(appOutDir: string, arch: Arch, outDir: string
 }
 
 export const packUpdater = async (context: PackContext) => {
-	const { appOutDir, arch, electronPlatformName, outDir } = context;
+	const { appOutDir, arch, electronPlatformName, outDir, packager } = context;
 
 	switch (electronPlatformName) {
 		case 'darwin':
-			await packUpdaterOnDarwin(appOutDir, arch, outDir);
+			await packUpdaterOnDarwin(
+				path.resolve(appOutDir, `${packager.appInfo.productFilename}.app`),
+				arch,
+				outDir
+			);
 			break;
 		case 'win32':
 			await packUpdaterOnWin32(appOutDir, arch, outDir);

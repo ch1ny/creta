@@ -1,10 +1,28 @@
-use std::{fs, os::windows::process::CommandExt, path::Path, process};
+#[cfg(windows)]
+use std::os::windows::process::CommandExt;
+use std::{fs, path::Path, process};
 
 use clap::{arg, Command};
 
 mod extract;
 
 fn exec_args(cmd: &str, args: &Vec<&str>, err_msg: &str) {
+    #[cfg(unix)]
+    match process::Command::new(cmd).args(args).output() {
+        Ok(output) => {
+            if output.stderr.len() > 0 {
+                println!("{}", err_msg);
+                process::exit(-1);
+            }
+        }
+        Err(err) => {
+            println!("Command 执行失败");
+            println!("{}", args.join(" "));
+            println!("{}", err);
+            process::exit(-1);
+        }
+    }
+    #[cfg(windows)]
     match process::Command::new(cmd)
         .creation_flags(0x08000000)
         .args(args)
