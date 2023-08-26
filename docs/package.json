@@ -1,6 +1,7 @@
 {
 	"name": "creta-docs",
 	"version": "1.0.0",
+	"private": true,
 	"main": "index.js",
 	"author": "德布罗煜",
 	"license": "MIT",
