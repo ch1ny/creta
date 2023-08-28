@@ -29,7 +29,7 @@ class Constants {
 			this._gitName = cp.execSync('git config --global user.name', { encoding: 'utf8' }).trim();
 			return this._gitName;
 		} catch (ex) {
-			return 'author';
+			return '';
 		}
 	}
 
@@ -157,7 +157,7 @@ const copyTemplate = async (props: IProjectProps, projectDir: string) => {
 		cp.execSync('git init', {
 			cwd: projectDir,
 		});
-	} catch (e) {}
+	} catch {}
 
 	// 安装依赖
 	const pkgInfo = pkgFromUserAgent(process.env.npm_config_user_agent);

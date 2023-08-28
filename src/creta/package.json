@@ -39,8 +39,7 @@
 		"esbuild": "^0.17.18",
 		"fs-extra": "^11.1.0",
 		"inquirer": "8",
-		"ts-node": "^10.9.1",
-		"vite-electron-plugin": "^0.8.2"
+		"ts-node": "^10.9.1"
 	},
 	"keywords": [
 		"creta",

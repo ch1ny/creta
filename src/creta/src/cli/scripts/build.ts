@@ -2,7 +2,7 @@ import chalk from 'chalk';
 import fse from 'fs-extra';
 import path from 'path';
 import constants from '../constants';
-import { buildMain, buildPreload, buildRender, getCretaConfigs } from '../utils';
+import { buildMain, buildPreload, buildRender, getCretaConfigs, tscBuild } from '../utils';
 
 const { scriptsCwd } = constants;
 
