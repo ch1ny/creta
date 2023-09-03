@@ -1,14 +1,17 @@
 import chalk from 'chalk';
-import fse from 'fs-extra';
+import fs from 'fs';
+import json5 from 'json5';
 import path from 'path';
 import ts from 'typescript';
 
-type TsConfigJson = {
-	compilerOptions?: ts.CompilerOptions;
-};
+async function loadTsConfig(configPath: string) {
+	const tsconfigJson = await fs.promises.readFile(configPath, { encoding: 'utf8' });
+	const tsconfig = json5.parse(tsconfigJson);
+	return tsconfig;
+}
 
 async function analyzeTsCompilerOptions(configPath: string) {
-	const tsconfig = await fse.readJSON(configPath);
+	const tsconfig = await loadTsConfig(configPath);
 	let {
 		/* 枚举字段 */
 		importsNotUsedAsValues,
@@ -344,7 +347,7 @@ type TAfterCompileCallback = (
  * @returns
  */
 export const tscWatch = async (
-	rootFiles: string[], 
+	rootFiles: string[],
 	configPath: string,
 	callbacks: {
 		onBeforeCompile?: TBeforeCompileCallback;
@@ -438,10 +441,9 @@ export const tscWatch = async (
  * @returns
  */
 export const tscBuild = async (rootFiles: string[], configPath: string) => {
-	const tsconfig: TsConfigJson = await fse.readJSON(configPath);
 	const options = await analyzeTsCompilerOptions(configPath);
 
-	const host = ts.createCompilerHost(tsconfig.compilerOptions || {});
+	const host = ts.createCompilerHost(options);
 
 	const program = ts.createProgram({
 		rootNames: options.allowJs ? rootFiles : rootFiles.filter((file) => file.endsWith('.ts')),

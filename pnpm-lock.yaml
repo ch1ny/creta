@@ -88,6 +88,9 @@ importers:
       inquirer:
         specifier: '8'
         version: 8.0.0
+      json5:
+        specifier: ^2.2.3
+        version: 2.2.3
       ts-node:
         specifier: ^10.9.1
         version: 10.9.1(@types/node@18.15.2)(typescript@4.9.5)

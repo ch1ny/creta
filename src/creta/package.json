@@ -39,6 +39,7 @@
 		"esbuild": "^0.17.18",
 		"fs-extra": "^11.1.0",
 		"inquirer": "8",
+		"json5": "^2.2.3",
 		"ts-node": "^10.9.1"
 	},
 	"keywords": [
