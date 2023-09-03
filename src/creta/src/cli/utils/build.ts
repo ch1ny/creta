@@ -30,6 +30,8 @@ export const buildPreload = async () =>
 
 export const buildMain = async () =>
 	tscBuild(
-		[constants.mainScriptEntryFile],
+		(await fs.promises.readdir(path.resolve(scriptsCwd, 'src', 'main')))
+			.filter((file) => file.endsWith('.js') || file.endsWith('.ts'))
+			.map((file) => path.resolve(scriptsCwd, 'src', 'main', file)),
 		path.resolve(scriptsCwd, 'src', 'main', 'tsconfig.json')
 	);

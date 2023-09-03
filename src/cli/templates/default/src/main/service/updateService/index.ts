@@ -1,9 +1,10 @@
 import { ipcMain } from 'electron';
-import { DARWIN } from './darwin';
-import { IUpdateService } from './interface';
-import { WIN32 } from './win32';
+import { Service } from '@/core/di';
+import Darwin from './darwin';
+import Win32 from './win32';
 
-class UpdateService implements IUpdateService {
+@Service()
+export default class UpdateService {
 	constructor() {
 		ipcMain.on('APP.UPDATE.EXE_UPDATER', () => {
 			this.exeUpdater();
@@ -13,9 +14,9 @@ class UpdateService implements IUpdateService {
 	async beforeStartCheck() {
 		switch (process.platform) {
 			case 'win32':
-				return await WIN32.beforeStartCheck();
+				return await Win32.beforeStartCheck();
 			case 'darwin':
-				return await DARWIN.beforeStartCheck();
+				return await Darwin.beforeStartCheck();
 			case 'linux':
 				return; // TODO:
 			default:
@@ -26,9 +27,9 @@ class UpdateService implements IUpdateService {
 	async exeUpdater() {
 		switch (process.platform) {
 			case 'win32':
-				return await WIN32.exeUpdater();
+				return await Win32.exeUpdater();
 			case 'darwin':
-				return await DARWIN.exeUpdater();
+				return await Darwin.exeUpdater();
 			case 'linux':
 				return; // TODO:
 			default:
@@ -36,5 +37,3 @@ class UpdateService implements IUpdateService {
 		}
 	}
 }
-
-export const updateService = new UpdateService();

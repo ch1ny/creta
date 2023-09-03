@@ -9,7 +9,10 @@
 		"skipLibCheck": true,
 		"resolveJsonModule": true,
 		"outDir": "../../build/main",
-		"removeComments": true
+		"removeComments": true,
+		"paths": {
+			"@/*": ["./*"]
+		}
 	},
 	"include": ["./**/*"],
 	"exclude": ["node_modules/**/*", "./tsconfig.json", "./package.json"]

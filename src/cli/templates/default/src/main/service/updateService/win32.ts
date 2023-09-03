@@ -1,11 +1,10 @@
 import cp from 'child_process';
 import fs from 'fs';
 import path from 'path';
-import { EXE_DIR, EXE_PATH } from '../../../constants';
-import { IUpdateService } from './interface';
+import { EXE_DIR, EXE_PATH } from '@/constants';
 
-class Win32 implements IUpdateService {
-	async beforeStartCheck() {
+export default class Win32 {
+	static async beforeStartCheck() {
 		if (!fs.existsSync(path.resolve(EXE_DIR, 'update.eup'))) return;
 
 		// 阻塞
@@ -14,7 +13,7 @@ class Win32 implements IUpdateService {
 		});
 	}
 
-	async exeUpdater() {
+	static async exeUpdater() {
 		const { spawn } = cp;
 
 		const child = spawn(
@@ -29,5 +28,3 @@ class Win32 implements IUpdateService {
 		child.unref();
 	}
 }
-
-export const WIN32 = new Win32();
