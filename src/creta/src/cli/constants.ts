@@ -5,8 +5,12 @@ class Constants {
 	private _gitName?: string;
 	get gitName() {
 		if (this._gitName !== undefined) return this._gitName;
-		this._gitName = cp.execSync('git config --global user.name', { encoding: 'utf8' }).trim();
-		return this._gitName;
+		try {
+			this._gitName = cp.execSync('git config --global user.name', { encoding: 'utf8' }).trim();
+			return this._gitName;
+		} catch {
+			return '';
+		}
 	}
 
 	cretaRootDir = path.resolve(__dirname, '..');
@@ -14,6 +18,11 @@ class Constants {
 	cliDir = path.join(this.cretaRootDir, 'cli');
 
 	scriptsCwd = process.cwd();
+
+	/**
+	 * 主进程入口脚本
+	 */
+	mainScriptEntryFile = path.resolve(this.scriptsCwd, 'src', 'main', 'core', 'bin.ts');
 
 	/**
 	 * 默认 vite 配置

@@ -1,11 +1,11 @@
-import cp from 'child_process';
+import fs from 'fs';
 import path from 'path';
 import { build } from 'vite';
-import electron from 'vite-electron-plugin';
 import constants from '../constants';
 import { getCretaConfigs } from './getCretaConfigs';
+import { tscBuild } from './tsc';
 
-const { cretaRootDir, defaultViteConfig, scriptsCwd } = constants;
+const { defaultViteConfig, scriptsCwd } = constants;
 
 export const buildRender = async () => {
 	const { outDir = path.resolve(process.cwd(), 'build'), viteConfig = {} } =
@@ -21,30 +21,17 @@ export const buildRender = async () => {
 };
 
 export const buildPreload = async () =>
-	new Promise<void>((resolve) => {
-		cp.execSync('tsc', {
-			cwd: path.resolve(scriptsCwd, 'src', 'preload'),
-			stdio: 'inherit',
-		});
-		resolve();
-	});
+	tscBuild(
+		(await fs.promises.readdir(path.resolve(scriptsCwd, 'src', 'preload')))
+			.filter((file) => file.endsWith('.js') || file.endsWith('.ts'))
+			.map((file) => path.resolve(scriptsCwd, 'src', 'preload', file)),
+		path.resolve(scriptsCwd, 'src', 'preload', 'tsconfig.json')
+	);
 
-export const buildMain = async () => {
-	const { outDir = path.resolve(scriptsCwd, 'build'), viteConfig = {} } = await getCretaConfigs();
-
-	return build({
-		root: cretaRootDir,
-		plugins: [
-			electron({
-				include: ['src/main'],
-				outDir: outDir,
-				logger: {
-					info: () => undefined,
-				},
-			}),
-		],
-		build: {
-			write: false,
-		},
-	});
-};
+export const buildMain = async () =>
+	tscBuild(
+		(await fs.promises.readdir(path.resolve(scriptsCwd, 'src', 'main')))
+			.filter((file) => file.endsWith('.js') || file.endsWith('.ts'))
+			.map((file) => path.resolve(scriptsCwd, 'src', 'main', file)),
+		path.resolve(scriptsCwd, 'src', 'main', 'tsconfig.json')
+	);

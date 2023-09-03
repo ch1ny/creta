@@ -3,7 +3,7 @@ import React, { useEffect, useState } from 'react';
 import styles from './index.module.less';
 
 const { ipcRenderer } = window;
-const DRAG_BAR_BUTTON_EVENT = 'DRAG_BAR.BUTTONS_ONCLICK';
+const DRAG_BAR_BUTTON_EVENT = 'COMMON.DRAG_BAR.BUTTONS_ONCLICK';
 
 export const TopBar: React.FC = () => {
 	const [isMaximized, setIsMaximized] = useState(false);

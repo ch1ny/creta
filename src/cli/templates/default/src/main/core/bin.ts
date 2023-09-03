@@ -1,3 +1,1 @@
-import { startApp } from './app/lifecycle';
-
-startApp();
+import '@/service/appService';

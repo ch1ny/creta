@@ -1,13 +1,12 @@
 import cp from 'child_process';
 import fs from 'fs';
 import path from 'path';
-import { EXE_DIR } from '../../../constants';
-import { IUpdateService } from './interface';
+import { EXE_DIR } from '@/constants';
 
 const ContentsDir = path.dirname(EXE_DIR);
 
-class Darwin implements IUpdateService {
-	async beforeStartCheck() {
+export default class Darwin {
+	static async beforeStartCheck() {
 		if (!fs.existsSync(path.join(ContentsDir, 'update.eup'))) return;
 
 		// 阻塞
@@ -16,7 +15,7 @@ class Darwin implements IUpdateService {
 		});
 	}
 
-	async exeUpdater() {
+	static async exeUpdater() {
 		const { spawn } = cp;
 		const child = spawn(
 			path.join(ContentsDir, 'updater'),
@@ -29,5 +28,3 @@ class Darwin implements IUpdateService {
 		child.unref();
 	}
 }
-
-export const DARWIN = new Darwin();

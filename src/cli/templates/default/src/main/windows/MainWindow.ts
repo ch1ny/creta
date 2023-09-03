@@ -39,7 +39,7 @@ export default class MainWindow {
 			if (IS_PACKAGED) {
 				mainWindow.loadFile(path.resolve(ASAR_ROOT_PATH, './renderer/index.html'));
 			} else {
-				mainWindow.loadURL(`http://127.0.0.1:${ARGS['--port']}/`);
+				mainWindow.loadURL(`http://localhost:${ARGS['--port']}/`);
 				mainWindow.once('ready-to-show', () => {
 					mainWindow.webContents.openDevTools();
 				});
