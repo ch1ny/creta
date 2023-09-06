@@ -108,8 +108,8 @@ importers:
         specifier: ^18.11.18
         version: 18.15.2
       electron:
-        specifier: ^23.1.1
-        version: 23.1.1
+        specifier: ^23.3.13
+        version: 23.3.13
       electron-builder:
         specifier: ^23.6.0
         version: 23.6.0
@@ -2655,8 +2655,8 @@ packages:
     resolution: {integrity: sha512-L9zlje9bIw0h+CwPQumiuVlfMcV4boxRjFIWDcLfFqTZNbkwOExBzfmswytHawObQX4OUhtNv8gIiB21kOurIg==}
     dev: false
 
-  /electron@23.1.1:
-    resolution: {integrity: sha512-junV1NzPx5T8Mx9+o8fMWK1Q5WOtG5vggiM09PGYg/6zTcGDL3DjGVHeUa/97gx7ErXL37DrFnxNg6+ePWprDg==}
+  /electron@23.3.13:
+    resolution: {integrity: sha512-BaXtHEb+KYKLouUXlUVDa/lj9pj4F5kiE0kwFdJV84Y2EU7euIDgPthfKtchhr5MVHmjtavRMIV/zAwEiSQ9rQ==}
     engines: {node: '>= 12.20.55'}
     hasBin: true
     requiresBuild: true
@@ -3580,6 +3580,7 @@ packages:
 
   /has-property-descriptors@1.0.0:
     resolution: {integrity: sha512-62DVLZGoiEBDHQyqG4w9xCuZ7eJEwNmJRWw2VY84Oedb7WFcA27fiEVe8oUQx9hAUJ4ekurquucTGwsyO1XGdQ==}
+    requiresBuild: true
     dependencies:
       get-intrinsic: 1.2.0
     dev: true
