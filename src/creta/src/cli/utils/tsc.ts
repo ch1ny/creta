@@ -366,7 +366,6 @@ export const tscWatch = async (
 		createProgram,
 		reportDiagnostic,
 		reportWatchStatusChanged,
-		undefined,
 		undefined
 	);
 
