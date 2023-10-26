@@ -1,8 +1,8 @@
-import fs from 'fs';
 import path from 'path';
 import { createServer } from 'vite';
 import constants from '../constants';
 import { buildMain, buildPreload, getCretaConfigs, runElectron, tscWatch } from '../utils';
+import getChildrenScripts from '../utils/getChildrenScripts';
 
 const { defaultViteConfig, scriptsCwd } = constants;
 
@@ -59,11 +59,10 @@ const main = async () => {
 		await Promise.all([
 			// 2.2.1 tsc watch 主进程代码
 			new Promise<void>(async (resolve) => {
+				const filesToBuild = await getChildrenScripts(path.resolve(scriptsCwd, 'src', 'main'));
 				const mainConfigPath = path.resolve(scriptsCwd, 'src', 'main', 'tsconfig.json');
 				tscWatchPrograms.main = tscWatch(
-					(await fs.promises.readdir(path.resolve(scriptsCwd, 'src', 'main')))
-						.filter((file) => file.endsWith('.js') || file.endsWith('.ts'))
-						.map((file) => path.resolve(scriptsCwd, 'src', 'main', file)),
+					filesToBuild,
 					mainConfigPath,
 					{
 						onAfterFirstCompile(program, defaultCallback?) {
@@ -127,10 +126,11 @@ const main = async () => {
 			// 2.2.2 tsc watch 预加载脚本代码
 			new Promise<void>(async (resolve) => {
 				const preloadConfigPath = path.resolve(scriptsCwd, 'src', 'preload', 'tsconfig.json');
+
+				const filesToBuild = await getChildrenScripts(path.resolve(scriptsCwd, 'src', 'preload'));
+
 				tscWatchPrograms.preload = tscWatch(
-					(await fs.promises.readdir(path.resolve(scriptsCwd, 'src', 'preload')))
-						.filter((file) => file.endsWith('.js') || file.endsWith('.ts'))
-						.map((file) => path.resolve(scriptsCwd, 'src', 'preload', file)),
+					filesToBuild,
 					preloadConfigPath,
 					{
 						onAfterFirstCompile(program, defaultCallback?) {

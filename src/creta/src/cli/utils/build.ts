@@ -4,6 +4,7 @@ import { build } from 'vite';
 import constants from '../constants';
 import { getCretaConfigs } from './getCretaConfigs';
 import { tscBuild } from './tsc';
+import getChildrenScripts from './getChildrenScripts';
 
 const { defaultViteConfig, scriptsCwd } = constants;
 
@@ -29,23 +30,7 @@ export const buildPreload = async () =>
 	);
 
 export const buildMain = async () => {
-	const mainRootDir = path.resolve(scriptsCwd, 'src', 'main');
-	const nextDirList = [mainRootDir];
-	const filesToBuild: string[] = [];
-
-	let nextDir: string | undefined;
-	while ((nextDir = nextDirList.shift())) {
-		const files = await fs.promises.readdir(path.resolve(nextDir));
-		files.map(async (fileName) => {
-			const filePath = path.resolve(nextDir!, fileName);
-			const fsStatus = await fs.promises.stat(filePath);
-			if (fsStatus.isDirectory()) {
-				nextDirList.push(filePath);
-			} else if (filePath.endsWith('.js') || filePath.endsWith('.ts')) {
-				filesToBuild.push(filePath);
-			}
-		});
-	}
+	const filesToBuild = await getChildrenScripts(path.resolve(scriptsCwd, 'src', 'main'));
 
 	await tscBuild(filesToBuild, path.resolve(scriptsCwd, 'src', 'main', 'tsconfig.json'));
 };
