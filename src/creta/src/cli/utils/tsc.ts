@@ -292,7 +292,7 @@ const getAliasTransformers = (options: ts.CompilerOptions) => {
 										const relativePath = path.relative(
 											path.dirname(
 												// @ts-ignore
-												node.parent.resolvedPath
+												node.parent.originalFileName
 											),
 											resolvedPath
 										);
