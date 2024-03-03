@@ -4,7 +4,8 @@
 	"private": true,
 	"workspaces": [
 		"src/cli",
-		"src/creta"
+		"src/creta",
+		"docs"
 	],
 	"devDependencies": {
 		"@types/node": "^20.5.6",

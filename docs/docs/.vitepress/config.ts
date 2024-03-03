@@ -83,7 +83,7 @@ export default defineConfig({
 			'/configs/': sideBar,
 		},
 	},
-	transformHtml(_code, id, ctx) {
+	async transformHtml(_code, id, ctx) {
 		if (/[\\/]404\.html$/.test(id)) return;
 
 		const url = ctx.pageData.relativePath.replace(/((^|\/)index)?\.md$/, `$2.html`);
@@ -95,7 +95,7 @@ export default defineConfig({
 
 		links.push(link);
 	},
-	buildEnd(siteConfig) {
+	async buildEnd(siteConfig) {
 		const { outDir, site: { base } } = siteConfig;
 		const sitemap = new SitemapStream({ hostname: `https://kira.host${base}` });
 		const sitemapWriteStream = fs.createWriteStream(path.resolve(outDir, 'sitemap.xml'));
