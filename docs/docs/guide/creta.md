@@ -1,7 +1,7 @@
 # 什么是 creta
 
 <div style="width: 100%; display: flex; justify-content: center;">
-  <img src="https://assets.kira.host/image/creta_logo_colored.svg" alt="LOGO" width="150" />
+  <img src="https://kira.host/assets/image/creta_logo_colored.svg" alt="LOGO" width="150" />
 </div>
 
 <div style="width: 100%; display: flex;">

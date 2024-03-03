@@ -30,6 +30,7 @@ const sideBar = [
 const links: { url: string; lastmod?: number }[] = [];
 
 export default defineConfig({
+	base: '/creta',
 	title: 'creta',
 	description:
 		'Scaffolding to create a react+electron+typescript App.帮您快速搭建基于 React 和 TypeScript 的 electron 应用。',
@@ -55,7 +56,7 @@ export default defineConfig({
 			'link',
 			{
 				rel: 'icon',
-				href: 'https://assets.kira.host/image/creta_logo_colored.svg',
+				href: 'https://kira.host/assets/image/creta_logo_colored.svg',
 			},
 		],
 	],
@@ -85,14 +86,18 @@ export default defineConfig({
 	transformHtml(_code, id, ctx) {
 		if (/[\\/]404\.html$/.test(id)) return;
 
-		links.push({
-			url: ctx.pageData.relativePath.replace(/((^|\/)index)?\.md$/, '$2.html'),
+		const url = ctx.pageData.relativePath.replace(/((^|\/)index)?\.md$/, `$2.html`);
+
+		const link = {
+			url: `${ctx.siteConfig.site.base}${url === '.html' ? 'index.html' : url}`,
 			lastmod: ctx.pageData.lastUpdated,
-		});
+		}
+
+		links.push(link);
 	},
 	buildEnd(siteConfig) {
-		const { outDir } = siteConfig;
-		const sitemap = new SitemapStream({ hostname: 'https://creta.kira.host' });
+		const { outDir, site: { base } } = siteConfig;
+		const sitemap = new SitemapStream({ hostname: `https://kira.host${base}` });
 		const sitemapWriteStream = fs.createWriteStream(path.resolve(outDir, 'sitemap.xml'));
 		sitemap.pipe(sitemapWriteStream);
 		links.forEach((link) => sitemap.write(link));
